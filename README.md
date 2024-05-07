@@ -1,3 +1,4 @@
 # legalAutosFrontend
-##Juan David Gómez
-##Mateo Gómez 
+## Juan David Gómez
+## Mateo Gómez 
+## Daniel Cortes
