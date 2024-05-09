@@ -24,8 +24,11 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
+import React from 'react'
 
-var routes = [
+const Buyer = React.lazy(()=> import('./views/managment/Buyers/Buyer'))
+//const Buyer = React.lazy(()=> import("../src/views/managment/Buyers/Buyer.js"))
+const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -35,14 +38,27 @@ var routes = [
   },
   {
     path: "/icons",
-    name: "Icons",
+    name: "Icon",
     icon: "nc-icon nc-diamond",
     component: <Icons />,
     layout: "/admin",
   },
   {
+    path: "/buyers",
+    name: "Buyers",
+    icon: "nc-icon nc-pin-3",
+    exact: true,
+  },
+  {
+    path: "/buyers/buyer",
+    name: "Buyer",
+    icon: "nc-icon nc-diamond",
+    component: <Buyer />,
+    layout: "/admin",
+  },
+  {
     path: "/maps",
-    name: "Maps",
+    name: "Buyer2",
     icon: "nc-icon nc-pin-3",
     component: <Maps />,
     layout: "/admin",
