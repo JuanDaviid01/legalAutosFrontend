@@ -29,6 +29,20 @@ import AdminLayout from "layouts/Admin.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+//Imports
+import Buyer from "./views/managment/Buyers/Buyer.js";
+
+
+//Exports
+export {
+  Buyer,
+}
+
+
+
+
+
+
 root.render(
   <BrowserRouter>
     <Routes>
