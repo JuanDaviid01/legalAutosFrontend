@@ -4,8 +4,8 @@ import {
   cilStar,
   cilGarage,
   cilBorderAll,
-  cilHandshake
-
+  cilHandshake,
+  cilCash
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -20,7 +20,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Buyers',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCash} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -30,16 +30,7 @@ const _nav = [
           color: 'success',
         },
       },
-      {
-        component: CNavItem,
-        name: 'CoreUI Flags',
-        to: '/icons/flags',
-      },
-      {
-        component: CNavItem,
-        name: 'CoreUI Brands',
-        to: '/icons/brands',
-      },
+
     ],
   },
   {
@@ -55,12 +46,6 @@ const _nav = [
           color: 'success',
         },
       },
-      {
-        component: CNavItem,
-        name: 'Seller form',
-        to: '/icons/flags',
-      },
-
     ],
   },
   {

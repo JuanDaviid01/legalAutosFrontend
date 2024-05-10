@@ -30,7 +30,7 @@ const Buyer = () => {
 
 
     const handleCreateBuyer = () => {
-        navigate('buyers/buyer');
+        navigate('/buyers/buyerform');
     };
 
     function handleEdit() {
