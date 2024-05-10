@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col,
-    Button
-} from "reactstrap";
+    CButton,
+    CTable,
+    CTableHead,
+    CTableBody,
+    CTableRow,
+    CTableHeaderCell,
+    CTableDataCell
+} from '@coreui/react';
 
 const Vehicle = () => {
     const navigate = useNavigate();
