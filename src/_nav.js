@@ -53,6 +53,7 @@ const _nav = [
       },
     ],
   },
+
   {
         component: CNavTitle,
     name: 'Management'
@@ -65,6 +66,32 @@ const _nav = [
     items: [
       
     ]
+  },
+  {
+    component: CNavGroup,
+    name: 'Sellers',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Seller',
+        to: '/sellers/seller',
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Flags',
+        to: '/icons/flags',
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Brands',
+        to: '/icons/brands',
+      },
+    ],
   },
   {
     component: CNavTitle,
