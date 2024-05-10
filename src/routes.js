@@ -16,6 +16,8 @@ const routes = [
   //-------------------------------------
   { path: '/buyers', name: 'Buyers', exact: true},
   { path: '/buyers/buyer', name: 'Buyer', element: Buyer },
+  { path: '/sellers', name: 'Sellers', exact: true },
+  {path: '/sellers/seller', name: 'Seller', element: Seller}
 ]
 
 export default routes;
