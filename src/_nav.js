@@ -52,33 +52,7 @@ const _nav = [
       },
     ],
   },
-  
-    {
-      component: CNavItem,
-      name: 'Dashboard',
-      to: '/dashboard',
-      icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      },
-    },
-    {
-      component: CNavGroup,
-      name: 'Publications',
-      icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-      items: [
-        {
-          component: CNavItem,
-          name: 'Publication',
-          to: '/Publications/Publication',
-          badge: {
-            color: 'success',
-            text: 'NEW',
-          },
-        },
-      ],
-    },
+
   {
         component: CNavTitle,
     name: 'Management'
@@ -91,6 +65,32 @@ const _nav = [
     items: [
       
     ]
+  },
+  {
+    component: CNavGroup,
+    name: 'Sellers',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Seller',
+        to: '/sellers/seller',
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Flags',
+        to: '/icons/flags',
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Brands',
+        to: '/icons/brands',
+      },
+    ],
   },
   {
     component: CNavTitle,

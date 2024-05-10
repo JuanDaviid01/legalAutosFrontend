@@ -4,6 +4,7 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Vehicle = React.lazy(() => import('./views/management/Vehicles/Vehicle'))
 const VehicleForm = React.lazy(() => import('./views/theme/typography/Typography'))
+
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
 const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
@@ -15,10 +16,7 @@ const routes = [
   {path: '/Vehicles/Vehicle', name: 'Vehicle', element:Vehicle},
   //-------------------------------------
   { path: '/buyers', name: 'Buyers', exact: true},
-  { path: '/Buyers/Buyer', name: 'Buyer', element: Buyer },
-  //-------------------------------------
-  { path: '/Publications', name: 'Publications', exact: true},
-  { path: '/Publications/Publication', name: 'Publication', element: Publication },
+
 ]
 
 export default routes;
