@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 import {
-    Card,
-    CardHeader, 
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col,
-    Button
-} from "reactstrap";
+  CButton,
+  CTable,
+  CTableHead,
+  CTableBody,
+  CTableRow,
+  CTableHeaderCell,
+  CTableDataCell
+} from "@coreui/react";
 
 const Publication = () => {
     const [publicationData, setPublicationData] = useState([]);
@@ -56,47 +55,28 @@ const Publication = () => {
     ];
 
         return (
-        <div className="content">
-          <Row>
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h4">Publications Information</CardTitle>
-                  <Button onClick={handleCreatePublication}>New Publication</Button>
-                  </CardHeader>
-                <CardBody>
-                  <Table responsive>
-                    <thead className="text-primary">
-                      <tr>
+          <div>
+            <CButton onClick={handleCreatePublication} > New Publication </CButton>
+            <CTable>
+                <CTableHead>
+                    <CTableRow>
                         {columns.map((column, index) => (
-                          <th key={index}>{column.title}</th>
+                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
                         ))}
-                      </tr>
-                    </thead>
-                    <tbody>
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
                     {publicationData.map((Publication, index) => (
-                        <tr key={index}>
-                          {columns.map((column, columnIndex) => {
-                            if (column.render) {
-                              return (
-                                <td key={columnIndex}>{column.render(Publication)}</td>
-                            );
-                          } else {
-                            return (
-                              <td key={columnIndex}>{Publication[column.dataIndex]}</td>
-                            );
-                        }
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </CardBody>
-        </Card>
-      </Col>
-    </Row>
-  </div>
-);
+                        <CTableRow key={index}>
+                            {columns.map((column, columnIndex) => (
+                                <CTableDataCell key={columnIndex}> {Publication[column.dataIndex]} </CTableDataCell>
+                            ))}
+                        </CTableRow>
+                    ))}
+                </CTableBody>
+            </CTable>
+        </div>
+    );
 }
 
 export default Publication;
