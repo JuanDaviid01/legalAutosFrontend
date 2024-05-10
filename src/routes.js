@@ -7,6 +7,7 @@ const VehicleForm = React.lazy(() => import('./views/theme/typography/Typography
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
+const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
