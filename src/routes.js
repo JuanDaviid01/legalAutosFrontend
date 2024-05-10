@@ -3,6 +3,7 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Vehicle = React.lazy(() => import('./views/management/Vehicles/Vehicle'))
 const VehicleForm = React.lazy(() => import('./views/theme/typography/Typography'))
+
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
@@ -19,6 +20,9 @@ const routes = [
   //-------------------------------------
   { path: '/icons', exact: true, name: 'Icons', element: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
+  { path: '/buyers/buyer', name: 'Buyer', element: Buyer },
+  { path: '/sellers', name: 'Sellers', exact: true },
+  {path: '/sellers/seller', name: 'Seller', element: Seller}
 ]
 
 export default routes;
