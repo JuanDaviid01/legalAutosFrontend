@@ -17,7 +17,7 @@ const Vehicle = () => {
     const navigate = useNavigate();
     const [vehicleData, setVehicleData] = useState([]);
 
-    useEffect (() => {
+    useEffect(() => {
         const getVehicle = async () => {
             const response = await Axios({
                 url: 'http://localhost:1338/api/listVehicles',
@@ -36,75 +36,100 @@ const Vehicle = () => {
     const columns = [
         {
             title: 'Plate',
-            dataIndex: '',
+            dataIndex: 'vehiclePlate',
         },
         {
             title: 'Brand',
-            dataIndex: '',
+            dataIndex: 'vehicleBrand',
         },
         {
             title: 'Line',
-            dataIndex: '',
+            dataIndex: 'vehicleLine',
         },
         {
             title: 'Type',
-            dataIndex: '',
+            dataIndex: 'vehicleType',
         },
         {
             title: 'Year',
-            dataIndex: '',
+            dataIndex: 'vehicleYear',
         },
         {
             title: 'Trasmision',
-            dataIndex: '',
+            dataIndex: 'vehicleTrasmition',
         },
         {
             title: 'C.c',
-            dataIndex: '',
+            dataIndex: 'vehicleCC',
         },
         {
             title: 'Color',
-            dataIndex: '',
+            dataIndex: 'vehicleColor',
         },
         {
             title: 'Soat',
-            dataIndex: '',
+            dataIndex: 'vehicleSoat',
         },
         {
             title: 'Tecno',
-            dataIndex: '',
+            dataIndex: 'vehicleTecno',
         },
         {
             title: 'State',
-            dataIndex: '',
+            dataIndex: 'vehicleState',
         },
         {
             title: 'Description',
-            dataIndex: '',
+            dataIndex: 'vehicleDescription',
         },
         {
             title: 'Buy price',
-            dataIndex: '',
+            dataIndex: 'vehicleBuyPrice',
         },
         {
             title: 'Sell price',
-            dataIndex: '',
+            dataIndex: 'vehicleSellPrice',
         },
         {
             title: 'Buy date',
-            dataIndex: '',
+            dataIndex: 'vehicleBuyDate',
         },
         {
             title: 'Sell date',
-            dataIndex: '',
+            dataIndex: 'vehicleSellDate',
         },
         {
             title: 'City id',
-            dataIndex: '',
+            dataIndex: 'cityId',
         },
         {
             title: 'Person id',
-            dataIndex: '',
+            dataIndex: 'personId',
         }
     ]
+    return (
+        <div>
+            <CButton onClick={handleCreateVehicle} > New Vehicle </CButton>
+            <CTable>
+                <CTableHead>
+                    <CTableRow>
+                        {columns.map((column, index) => (
+                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
+                        ))}
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                    {restaurantData.map((vehicle, index) => (
+                        <CTableRow key={index}>
+                            {columns.map((column, columnIndex) => (
+                                <CTableDataCell key={columnIndex}> {vehicle[column.dataIndex]} </CTableDataCell>
+                            ))}
+                        </CTableRow>
+                    ))}
+                </CTableBody>
+            </CTable>
+        </div>
+    )
 }
+export default Vehicle
+
