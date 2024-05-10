@@ -28,51 +28,47 @@ const Seller = () => {
         getSellers();
     }, []);
 
-    function handleCreateSeller(event) {
-        navigate('/sellers/sellerForm');
-    }
+    const handleCreateSeller = () => {
+        navigate('sellers/seller');
+    };
 
-    function handleEdit(restaurantId) {
-        navigate('/restaurants/restauranteditform/${restaurantId}');
+    function handleEdit() {
+        navigate('');
     }
 
     const columns = [
         {
             title: 'Name',
-            dataIndex: 'personId'
+            dataIndex: 'personName',
         },
         {
-            title: 'name',
-            dataIndex: 'personName'
-        },
-        {
-            title: 'LastName',
-            dataIndex: 'personLastName'
+            title: 'Last Name',
+            dataIndex: 'personLastName',
         },
         {
             title: 'Age',
-            dataIndex: 'personAge'
+            dataIndex: 'personAge',
         },
         {
             title: 'Email',
-            dataIndex: 'personEmail'
+            dataIndex: 'personEmail',
         },
         {
             title: 'Address',
-            dataIndex: 'personAddress'
+            dataIndex: 'personAddress',
         },
         {
-            tittle: 'City',
-            dataIndex: 'cityId'
+            title: 'City',
+            dataIndex: 'cityId',
         },
         {
-            tittle: 'Wallet',
-            dataIndex: 'walletId'
+            title: 'Wallet',
+            dataIndex: 'wallet',
         },
         {
-            tittle: 'Options',
-        }
-    ]
+            title: 'Options',
+        },
+    ];
 
     return (
         <div>
