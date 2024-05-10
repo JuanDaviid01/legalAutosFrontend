@@ -27,6 +27,45 @@ const _nav = [
     },
   },
   {
+    component: CNavGroup,
+    name: 'Buyers',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Buyer',
+        to: '/buyers/buyer',
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Flags',
+        to: '/icons/flags',
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Brands',
+        to: '/icons/brands',
+      },
+    ],
+  },
+  {
+        component: CNavTitle,
+    name: 'Management'
+  },
+  {
+    component: CNavGroup,
+    name: 'Vehicles',
+    to: '/Vehicle',
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      
+    ],
+  },
+  {
         component: CNavTitle,
     name: 'Management'
   },
