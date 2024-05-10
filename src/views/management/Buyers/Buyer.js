@@ -27,6 +27,7 @@ const Buyer = () => {
         getBuyers();
     }, []);
 
+
     const handleCreateBuyer = () => {
         navigate('buyers/buyer');
     };
@@ -70,7 +71,7 @@ const Buyer = () => {
     ];
     return (
         <div>
-            <CButton onClick={handleCreateRestaurant}>New buyer</CButton>
+            <CButton onClick={handleCreateBuyer}>New buyer</CButton>
             <CTable>
                 <CTableHead>
                     <CTableRow>
