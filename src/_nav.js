@@ -1,7 +1,6 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
- 
   cilStar,
   cilGarage,
 } from '@coreui/icons'
@@ -55,6 +54,27 @@ name: 'Management'
         },
       },
     ]
+  },
+  {
+    component: CNavGroup,
+    name: 'Sellers',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Seller',
+        to: '/sellers/seller',
+        badge: {
+          color: 'success',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'Seller form',
+        to: '/icons/flags',
+      },
+
+    ],
   },
 
   {
