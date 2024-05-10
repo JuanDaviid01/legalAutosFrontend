@@ -3,17 +3,20 @@ import CIcon from '@coreui/icons-react'
 import {
   cilStar,
   cilGarage,
+  cilBorderAll,
+  cilHandshake
+
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 
 const _nav = [
-  
+
 
   {
     component: CNavTitle,
-name: 'Management'
-},
+    name: 'Management'
+  },
   {
     component: CNavGroup,
     name: 'Buyers',
@@ -41,24 +44,8 @@ name: 'Management'
   },
   {
     component: CNavGroup,
-    name: 'Vehicles',
-    to: '/Vehicle',
-    icon: <CIcon icon={cilGarage} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'vehicle list',
-        to: '/Vehicles/Vehicle',
-        badge: {
-          color: 'success',
-        },
-      },
-    ]
-  },
-  {
-    component: CNavGroup,
     name: 'Sellers',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilHandshake} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -76,7 +63,38 @@ name: 'Management'
 
     ],
   },
+  {
+    component: CNavGroup,
+    name: 'Vehicles',
+    to: '/Vehicle',
+    icon: <CIcon icon={cilGarage} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'vehicle list',
+        to: '/Vehicles/Vehicle',
+        badge: {
+          color: 'success',
+        },
+      },
+    ]
+  },
 
+  {
+    component: CNavGroup,
+    name: 'Publications',
+    icon: <CIcon icon={cilBorderAll} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Publication',
+        to: '/Publications/Publication',
+        badge: {
+          color: 'success',
+        },
+      },
+    ],
+  },
   {
     component: CNavTitle,
     name: 'Components',

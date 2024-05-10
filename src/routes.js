@@ -23,7 +23,11 @@ const routes = [
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
   //------------------------------------- 
   { path: '/sellers', name: 'Sellers', exact: true },
-  { path: '/sellers/seller', name: 'Seller', element: Seller }
+  { path: '/sellers/seller', name: 'Seller', element: Seller },
+  //-------------------------------------
+  { path: '/Publications', name: 'Publications', exact: true},
+  { path: '/Publications/Publication', name: 'Publication', element: Publication },
+
 ]
 
 export default routes;
