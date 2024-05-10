@@ -7,6 +7,7 @@ const VehicleForm = React.lazy(() => import('./views/theme/typography/Typography
 
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
+const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -15,9 +16,7 @@ const routes = [
   {path: '/Vehicles/Vehicle', name: 'Vehicle', element:Vehicle},
   //-------------------------------------
   { path: '/buyers', name: 'Buyers', exact: true},
-  { path: '/buyers/buyer', name: 'Buyer', element: Buyer },
-  { path: '/sellers', name: 'Sellers', exact: true },
-  {path: '/sellers/seller', name: 'Seller', element: Seller}
+
 ]
 
 export default routes;

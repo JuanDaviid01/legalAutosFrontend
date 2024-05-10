@@ -53,7 +53,6 @@ const _nav = [
     ],
   },
 
-  
   {
         component: CNavTitle,
     name: 'Management'
