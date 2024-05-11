@@ -28,7 +28,7 @@ const Vehicle = () => {
     }, []);
     //----------------------------------------------------------------
     const handleCreateVehicle = () => {
-        navigate('/managment/vehicles/vehicle');
+        navigate('/vehicles/vehicleForm');
     };
 
     function handleEditVehicle() {
@@ -110,7 +110,9 @@ const Vehicle = () => {
     ]
     return (
         <div>
-            <CButton onClick={handleCreateVehicle} > New Vehicle </CButton>
+            <div style={{ marginBottom: '20px' }}>
+            <CButton className="btn-primary" onClick={handleCreateVehicle}>New Vehicle</CButton>
+            </div>
             <CTable>
                 <CTableHead>
                     <CTableRow>
@@ -122,9 +124,13 @@ const Vehicle = () => {
                 <CTableBody>
                     {vehicleData.map((vehicle, index) => (
                         <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => (
-                                <CTableDataCell key={columnIndex}> {vehicle[column.dataIndex]} </CTableDataCell>
-                            ))}
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(vehicle)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{vehicle[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
                         </CTableRow>
                     ))}
                 </CTableBody>

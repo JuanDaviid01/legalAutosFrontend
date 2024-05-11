@@ -3,7 +3,7 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Vehicle = React.lazy(() => import('./views/management/Vehicles/Vehicle'))
-const VehicleForm = React.lazy(() => import('./views/theme/typography/Typography'))
+const VehicleForm = React.lazy(() => import('./views/management/Vehicles/VehicleForm'))
 
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
@@ -17,6 +17,7 @@ const routes = [
   //-------------------------------------
   { path: '/Vehicles', name: 'Vehicles', exact: true },
   { path: '/Vehicles/Vehicle', name: 'Vehicle list', element: Vehicle },
+  {path: '/Vehicles/VehicleForm', name: 'vehicle Form', element: VehicleForm },
   //-------------------------------------
   { path: '/buyers', name: 'Buyers', exact: true },
   { path: '/Buyers/Buyer', name: 'Buyer', element: Buyer },

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import "react-datepicker/dist/react-datepicker.css";
+
 import Axios from "axios";
 import {
     CForm,
@@ -7,7 +9,7 @@ import {
     CFormInput,
     CFormSelect,
     CFormCheck,
-    CButton
+    CButton,
 } from '@coreui/react'
 
 const VehicleForm = () => {
@@ -21,7 +23,7 @@ const VehicleForm = () => {
         vehicleBuyPrice: '',
         vehicleState: '',
         cityId: 0,
-        personId: 0,
+        personId: "",
         buyDate: new Date,
         sellDate: new Date,
         vehicleCC: '',
@@ -29,7 +31,7 @@ const VehicleForm = () => {
         vehicleSoat: '',
         vehicleTecno: '',
         vehicleDescription: '',
-        vhicleType: '',
+        vehicleType: '',
     });
     const navigate = useNavigate();
 
@@ -37,16 +39,20 @@ const VehicleForm = () => {
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
+    const [selectedTransmission, setSelectedTransmission] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedSoat, setSelectedSoat] = useState('');
+    const [selectedTecno, setSelectedTecno] = useState('');
 
     useEffect(() => {
         const getDepartments = async () => {
-            const response = await Axios({ url: 'http://localhost:1337/api/listdepartments' });
+            const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
             setDepartments(lstDepartments.flat());
         }
 
         const getCities = async (departmentId) => {
-            const response = await Axios({ url: `http://localhost:1337/api/listcities/${departmentId}` });
+            const response = await Axios({ url: `http://localhost:1338/api/listcities/${departmentId}` });
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
@@ -67,19 +73,48 @@ const VehicleForm = () => {
             cityId: event.target.value
         });
     }
+    function handleSelectSoat(event) {
+        setSelectedSoat(event.target.value);
+        setVehicleData({
+            ...vehicleData,
+            cityId: event.target.value
+        });
+    }
+    function handleSelectTecno(event) {
+        setSelectedTecno(event.target.value);
+        setVehicleData({
+            ...vehicleData,
+            cityId: event.target.value
+        });
+    }
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setBuyerData({
+        setVehicleData({
             ...vehicleData,
             [name]: value
+        });
+    }
+
+    function handleSelectTransmissions(event) {
+        setSelectedTransmission(event.target.value);
+        setVehicleData({
+            ...vehicleData,
+            vehicleTrasmision: event.target.value
+        });
+    }
+    function handleSelectState(event) {
+        setSelectedState(event.target.value);
+        setVehicleData({
+            ...vehicleData,
+            vehicleState: event.target.value
         });
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
         try {
-            const response = await Axios.post('http://localhost:1337/api/createVehicle', vehicleData);
+            const response = await Axios.post('http://localhost:1338/api/createVehicle', vehicleData);
             console.log(response.data);
 
             // Si la respuesta es exitosa, navega a la ruta especificada
@@ -95,7 +130,7 @@ const VehicleForm = () => {
 
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
-            <CCol md={6}>
+            <CCol md={4}>
                 <CFormInput
                     type="text"
                     id="vehiclePlate"
@@ -106,57 +141,140 @@ const VehicleForm = () => {
                     required
                 />
             </CCol>
-            <CCol md={6}>
+            <CCol md={4}>
                 <CFormInput
                     type="text"
                     id="vehicleBrand"
                     name="vehiclebrand"
-                    label="Vehicle Brand"
-                    value={vehicleData.vehicle}
+                    label="Brand"
+                    value={vehicleData.vehicleBrand}
                     onChange={handleChange}
                     required
                 />
             </CCol>
-            <CCol md={6}>
+            <CCol md={4}>
                 <CFormInput
                     type="text"
                     id="vehicleLine"
                     name="vehicleLine"
-                    label="Vehicle Model"
+                    label="Line"
                     value={vehicleData.vehicleLine}
                     onChange={handleChange}
                     required
                 />
             </CCol>
-            <CCol md={6}>
+            <CCol md={4}>
+                <CFormInput
+                    type="text"
+                    id="vehicleType"
+                    name="vehicleType"
+                    label="Type of vehicle"
+                    value={vehicleData.vehicleType}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol md={4}>
                 <CFormInput
                     type="text"
                     id="vehicleYear"
                     name="vehicleYear"
-                    label="Email"
+                    label="Vehicle Year"
                     value={vehicleData.vehicleYear}
                     onChange={handleChange}
                     required
                 />
             </CCol>
-            <CCol md={12}>
+            <CCol xs={4}>
+                <CFormSelect id="transmissionOptions" label="Transmission" value={selectedTransmission} onChange={handleSelectTransmissions}>
+                    <option value="">Select transmission type</option>
+                    <option key="automatic" value="automatic">Automatic</option>
+                    <option key="manual" value="manual">Manual</option>
+                </CFormSelect>
+            </CCol>
+
+            <CCol md={4}>
                 <CFormInput
                     type="text"
-                    id="vehicleAddress"
-                    name="vehicleAddress"
-                    label="Address"
-                    value={vehicleData.vehicleAddress}
+                    id="vehicleBuyPrice"
+                    name="vehicleBuyPrice"
+                    label="Buy price"
+                    value={vehicleData.vehicleBuyPrice}
                     onChange={handleChange}
                     required
                 />
             </CCol>
+            <CCol md={4}>
+                <CFormInput
+                    type="date"
+                    id="buyDate"
+                    name="buyDate"
+                    label="Buy Date"
+                    value={vehicleData.buyDate}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol md={4}>
+                <CFormInput
+                    type="date"
+                    id="sellDate"
+                    name="sellDate"
+                    label="Sell Date"
+                    value={vehicleData.sellDate}
+                    onChange={handleChange}
+                />
+            </CCol>
+            <CCol md={4}>
+                <CFormInput
+                    type="text"
+                    id="vehicleCC"
+                    name="vehicleCC"
+                    label="engine displacement"
+                    value={vehicleData.vehicleCC}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol md={4}>
+                <CFormInput
+                    type="text"
+                    id="vehicleColor"
+                    name="vehicleColor"
+                    label="Color"
+                    value={vehicleData.vehicleColor}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol xs={4}>
+                <CFormSelect id="soatOptions" label="SOAT" value={selectedSoat ? 'true' : 'false'} onChange={handleSelectSoat}>
+                    <option value="">Select SOAT status</option>
+                    <option value="true">Valid</option>
+                    <option value="false">Timed out</option>
+                </CFormSelect>
+            </CCol>
+            <CCol xs={4}>
+                <CFormSelect id="tecnoOptions" label="Tecnomecanica" value={selectedTecno ? 'true' : 'false'} onChange={handleSelectSoat}>
+                    <option value="">Select Tecno status</option>
+                    <option value="true">Valid</option>
+                    <option value="false">Timed out</option>
+                </CFormSelect>
+            </CCol>
+            <CCol xs={4}>
+                <CFormSelect id="stateOptions" label="State" value={selectedState} onChange={handleSelectState}>
+                    <option value="">Select status</option>
+                    <option key="avaliable" value="avaliable">Avaliable</option>
+                    <option key="unvaliable" value="unvaliable">Unvaliable</option>
+                </CFormSelect>
+            </CCol>
             <CCol md={12}>
                 <CFormInput
-                    type="password"
-                    id="vehiclePassword"
-                    name="vehiclePassword"
-                    label="Password"
-                    value={vehicleData.vehiclePassword}
+                    type="text"
+                    id="vehicleDescription"
+                    name="vehicleDescription"
+                    label="Description of the vehicle"
+                    value={vehicleData.vehicleDescription}
                     onChange={handleChange}
                     required
                 />
@@ -177,44 +295,22 @@ const VehicleForm = () => {
                     ))}
                 </CFormSelect>
             </CCol>
-            <CCol xs={12}>
+            <CCol md={4}>
+                <CFormInput
+                    type="text"
+                    id="personId"
+                    name="personId"
+                    label="Enter your Identification Number"
+                    value={vehicleData.personId}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol xs={6}>
                 <CButton color="primary" type="submit">Save</CButton>
-                <CButton color="secondary" onClick={() => setbuyerData({
-                    personName: '',
-                    personLastName: '',
-                    personAge: '',
-                    personEmail: '',
-                    personAddress: '',
-                    personPassword: '',
-                    cityId: ''
-                })}>Cancel</CButton>
+                <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
             </CCol>
         </CForm>
     );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-};
+}
+export default VehicleForm

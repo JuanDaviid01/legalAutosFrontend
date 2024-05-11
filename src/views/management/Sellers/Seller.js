@@ -22,14 +22,14 @@ const Seller = () => {
                 url: 'http://localhost:1338/api/listsellers'
             });
             const lstSellers = Object.keys(response.data).map(i => response.data[i]);
-            setSellersData(lstSellers.flat());
+            setSellerData(lstSellers.flat());
         }
 
         getSellers();
     }, []);
 
     const handleCreateSeller = () => {
-        navigate('sellers/seller');
+        navigate('/sellers/sellerForm');
     };
 
     function handleEdit() {
