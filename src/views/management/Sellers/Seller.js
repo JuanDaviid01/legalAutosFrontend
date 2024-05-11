@@ -22,14 +22,14 @@ const Seller = () => {
                 url: 'http://localhost:1338/api/listsellers'
             });
             const lstSellers = Object.keys(response.data).map(i => response.data[i]);
-            setSellersData(lstSellers.flat());
+            setSellerData(lstSellers.flat());
         }
 
         getSellers();
     }, []);
 
     const handleCreateSeller = () => {
-        navigate('sellers/seller');
+        navigate('/sellers/sellerForm');
     };
 
     function handleEdit() {
@@ -72,7 +72,9 @@ const Seller = () => {
 
     return (
         <div>
-            <CButton onClick={handleCreateSeller} > New Seller </CButton>
+            <div style={{ marginBottom: '20px' }}>
+                <CButton className="btn-primary" onClick={handleCreateSeller}>New Seller</CButton>
+            </div>
             <CTable>
                 <CTableHead>
                     <CTableRow>
@@ -84,15 +86,19 @@ const Seller = () => {
                 <CTableBody>
                     {sellerData.map((seller, index) => (
                         <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => (
-                                <CTableDataCell key={columnIndex}> {seller[column.dataIndex]} </CTableDataCell>
-                            ))}
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(seller)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{seller[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
                         </CTableRow>
                     ))}
                 </CTableBody>
             </CTable>
         </div>
-    )
+    );
 }
 
 export default Seller
