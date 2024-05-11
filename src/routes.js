@@ -10,6 +10,8 @@ const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
 const BuyerForm = React.lazy(() => import('./views/management/Buyers/BuyerForm'))
 const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
+const PublicationForm = React.lazy(() => import('./views/management/Publications/PublicationForm'))
+
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -31,6 +33,7 @@ const routes = [
   //-------------------------------------
   { path: '/Publications', name: 'Publications', exact: true },
   { path: '/Publications/Publication', name: 'Publication', element: Publication },
+  { path: '/Publications/PublicationForm', name: 'PublicationForm', element: PublicationForm}
 
 ]
 
