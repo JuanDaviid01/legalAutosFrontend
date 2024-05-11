@@ -16,7 +16,8 @@ const BuyerForm = () => {
     const [buyerData, setBuyerData] = useState({
         personName: '',
         personLastName: '',
-        personAge: '',
+        personAge:'',
+        personId: '',
         personEmail: '',
         personAddress: "",
         personPassword: "",
@@ -72,10 +73,10 @@ const BuyerForm = () => {
     }
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
-        try {
-            const response = await Axios.post('http://localhost:1337/api/createrestaurant', buyerData);
-            console.log(response.data);
+    event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
+    try {
+        const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
+        console.log(response.data);
 
             // Si la respuesta es exitosa, navega a la ruta especificada
             navigate('/buyers/buyer');
@@ -89,76 +90,87 @@ const BuyerForm = () => {
     }
 
 
-    return (
-        <CForm className="row g-3" onSubmit={handleSubmit}>
-            <CCol md={6}>
-                <CFormInput
-                    type="text"
-                    id="personName"
-                    name="personName"
-                    label="First Name"
-                    value={buyerData.personName}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="text"
-                    id="personLastName"
-                    name="personLastName"
-                    label="Last Name"
-                    value={buyerData.personLastName}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="number"
-                    id="personAge"
-                    name="personAge"
-                    label="Age"
-                    value={buyerData.personAge}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="email"
-                    id="personEmail"
-                    name="personEmail"
-                    label="Email"
-                    value={buyerData.personEmail}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={12}>
-                <CFormInput
-                    type="text"
-                    id="personAddress"
-                    name="personAddress"
-                    label="Address"
-                    value={buyerData.personAddress}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={12}>
-                <CFormInput
-                    type="password"
-                    id="personPassword"
-                    name="personPassword"
-                    label="Password"
-                    value={buyerData.personPassword}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol xs={4}>
-                <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
+return (
+    <CForm className="row g-3" onSubmit={handleSubmit}>
+        <CCol md={6}>
+            <CFormInput
+                type="text"
+                id="personName"
+                name="personName"
+                label="First Name"
+                value={buyerData.personName}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={6}>
+            <CFormInput
+                type="text"
+                id="personLastName"
+                name="personLastName"
+                label="Last Name"
+                value={buyerData.personLastName}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={6}>
+            <CFormInput
+                type="text"
+                id="personId"
+                name="personId"
+                label="Identification"
+                value={buyerData.personId}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={6}>
+            <CFormInput
+                type="number"
+                id="personAge"
+                name="personAge"
+                label="Age"
+                value={buyerData.personAge}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={6}>
+            <CFormInput
+                type="email"
+                id="personEmail"
+                name="personEmail"
+                label="Email"
+                value={buyerData.personEmail}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={12}>
+            <CFormInput
+                type="text"
+                id="personAddress"
+                name="personAddress"
+                label="Address"
+                value={buyerData.personAddress}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={12}>
+            <CFormInput
+                type="password"
+                id="personPassword"
+                name="personPassword"
+                label="Password"
+                value={buyerData.personPassword}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol xs={4}>
+                <CFormSelect id="departmentOptions" label = "Department" value={ selectedDepartment} onChange={handleSelectDepartments} >
                     <option value="">Select a department</option>
                     {departments.map(opcion => (
                         <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
@@ -172,21 +184,13 @@ const BuyerForm = () => {
                         <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
                     ))}
                 </CFormSelect>
-            </CCol>
-            <CCol xs={12}>
+        </CCol>
+        <CCol xs={12}>
                 <CButton color="primary" type="submit">Save</CButton>
-                <CButton color="secondary" onClick={() => setbuyerData({
-                    personName: '',
-                    personLastName: '',
-                    personAge: '',
-                    personEmail: '',
-                    personAddress: '',
-                    personPassword: '',
-                    cityId: ''
-                })}>Cancel</CButton>
+                <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
             </CCol>
-        </CForm>
-    );
+    </CForm>
+);
 }
 
 export default BuyerForm
