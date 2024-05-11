@@ -17,6 +17,7 @@ const BuyerForm = () => {
         personName: '',
         personLastName: '',
         personAge:'',
+        personId: '',
         personEmail: '',
         personAddress: "",
         personPassword: "",
@@ -73,7 +74,7 @@ const BuyerForm = () => {
     const handleSubmit = async (event) => {
     event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
     try {
-        const response = await Axios.post('http://localhost:1337/api/createrestaurant', buyerData);
+        const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
         console.log(response.data);
 
         // Si la respuesta es exitosa, navega a la ruta especificada
@@ -108,6 +109,17 @@ return (
                 name="personLastName"
                 label="Last Name"
                 value={buyerData.personLastName}
+                onChange={handleChange}
+                required
+            />
+        </CCol>
+        <CCol md={6}>
+            <CFormInput
+                type="text"
+                id="personId"
+                name="personId"
+                label="Identification"
+                value={buyerData.personId}
                 onChange={handleChange}
                 required
             />
@@ -173,17 +185,9 @@ return (
                 </CFormSelect>
         </CCol>
         <CCol xs={12}>
-            <CButton color="primary" type="submit">Save</CButton>
-            <CButton color="secondary" onClick={() => setbuyerData({
-                personName: '',
-                personLastName: '',
-                personAge: '',
-                personEmail: '',
-                personAddress: '',
-                personPassword: '',
-                cityId: ''
-            })}>Cancel</CButton>
-        </CCol>
+                <CButton color="primary" type="submit">Save</CButton>
+                <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
+            </CCol>
     </CForm>
 );
 }
