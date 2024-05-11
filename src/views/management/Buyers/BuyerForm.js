@@ -44,10 +44,8 @@ const BuyerForm = () => {
 
         getDepartments();
 
-
-        if (selectedDepartment !== "") {
+        if (selectedDepartment !== "")
             getCities(selectedDepartment);
-        }
 
     }, [selectedDepartment]);
 
@@ -77,14 +75,6 @@ const BuyerForm = () => {
         try {
             const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
             console.log(response.data);
-
-            // Si la respuesta es exitosa, navega a la ruta especificada
-            navigate('/buyers/buyer');
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
 
             // Si la respuesta es exitosa, navega a la ruta especificada
             navigate('/buyers/buyer');
@@ -185,8 +175,7 @@ const BuyerForm = () => {
                     ))}
                 </CFormSelect>
             </CCol>
-
-            <CCol xs={4}>
+            <CCol xs={6}>
                 <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
                     <option value="">Select a city</option>
                     {cities.map(opcion => (

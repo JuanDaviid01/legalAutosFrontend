@@ -13,7 +13,7 @@ import {
 const SellerForm = () => {
 
     const [sellerData, setSellerData] = useState({
-        
+
         personName: '',
         personLastName: '',
         personAge: '',
@@ -109,7 +109,7 @@ const SellerForm = () => {
             <CCol md={12}>
                 <CFormInput type="password" id="personPassword" name="personPassword" label="Password" value={sellerData.personPassword} onChange={handleChange} required />
             </CCol>
-        
+
             <CCol xs={4}>
                 <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
                     <option value="">Select a department</option>

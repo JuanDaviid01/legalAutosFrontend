@@ -28,6 +28,14 @@ const routes = [
   { path: '/buyers/buyerform', name: 'BuyerForm', element: BuyerForm },
   { path: '/buyers/buyerEditForm/:personId', name: 'BuyerEditForm', element: BuyerEditForm },
   //-------------------------------------
+  { path: '/Publications', name: 'Publications', exact: true },
+  { path: '/Publications/Publication', name: 'Publication', element: Publication },
+  { path: '/Publications/PublicationForm', name: 'PublicationForm', element: PublicationForm},
+  //------------------------------------- 
+  { path: '/sellers', name: 'Sellers', exact: true },
+  { path: '/Sellers/Seller', name: 'Seller', element: Seller },
+  { path: '/sellers/sellerForm', name: 'SellerForm', element: SellerForm},
+  //-------------------------------------
   { path: '/icons', exact: true, name: 'Icons', element: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
 
