@@ -33,8 +33,8 @@ const Buyer = () => {
         navigate('/buyers/buyerform');
     };
 
-    function handleEdit() {
-        navigate(``);
+    function handleEdit(personId) {
+        navigate(`/buyers/buyerEditForm/${personId}`);
     };
 
     const columns = [
@@ -68,7 +68,18 @@ const Buyer = () => {
         },
         {
             title: 'Options',
-        },
+            render: (buyer) => (
+              <div>
+                <CButton color="primary" onClick={() => handleEdit(buyer.personId)}>
+                  Edit
+                </CButton>
+                <CButton color="danger" onClick={() => handleDelete(buyer)}>
+                  Delete
+                </CButton>
+              </div>
+            ),
+          },
+        
     ];
     return (
         <div>
