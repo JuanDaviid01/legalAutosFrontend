@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Axios from "axios";
 import {
     CForm,
@@ -9,14 +10,15 @@ import {
     CButton
 } from '@coreui/react'
 
-const BuyerForm = () => {
+const BuyerEditForm = () => {
+
+    const {personId} = useParams();
 
 
     const [buyerData, setBuyerData] = useState({
         personName: '',
         personLastName: '',
         personAge: '',
-        personId: '',
         personEmail: '',
         personAddress: "",
         personPassword: "",
@@ -30,6 +32,11 @@ const BuyerForm = () => {
     const [selectedCity, setSelectedCity] = useState('');
 
     useEffect(() => {
+        const getBuyers = async () => {
+            const response = await Axios({url: `http://localhost:1338/api/getBuyer/${personId}`});
+            const buyer = response.data.data
+            setBuyerData(buyer);
+        }   
         const getDepartments = async () => {
             const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
@@ -42,6 +49,7 @@ const BuyerForm = () => {
             setCities(lstCities.flat());
         }
 
+        getBuyers();
         getDepartments();
 
         if (selectedDepartment !== "")
@@ -108,17 +116,6 @@ const BuyerForm = () => {
                     name="personLastName"
                     label="Last Name"
                     value={buyerData.personLastName}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="text"
-                    id="personId"
-                    name="personId"
-                    label="Identification"
-                    value={buyerData.personId}
                     onChange={handleChange}
                     required
                 />
@@ -192,4 +189,4 @@ const BuyerForm = () => {
     );
 }
 
-export default BuyerForm
+export default BuyerEditForm
