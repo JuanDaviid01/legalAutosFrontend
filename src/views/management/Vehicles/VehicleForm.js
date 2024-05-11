@@ -6,21 +6,30 @@ import {
     CCol,
     CFormInput,
     CFormSelect,
+    CFormCheck,
     CButton
 } from '@coreui/react'
 
-const BuyerForm = () => {
+const VehicleForm = () => {
 
-
-    const [buyerData, setBuyerData] = useState({
-        personName: '',
-        personLastName: '',
-        personAge: '',
-        personId: '',
-        personEmail: '',
-        personAddress: "",
-        personPassword: "",
+    const [vehicleData, setVehicleData] = useState({
+        vehiclePlate: '',
+        vehicleBrand: '',
+        vehicleLine: '',
+        vehicleYear: '',
+        vehicleTrasmision: '',
+        vehicleBuyPrice: '',
+        vehicleState: '',
         cityId: 0,
+        personId: 0,
+        buyDate: new Date,
+        sellDate: new Date,
+        vehicleCC: '',
+        vehicleColor: '',
+        vehicleSoat: '',
+        vehicleTecno: '',
+        vehicleDescription: '',
+        vhicleType: '',
     });
     const navigate = useNavigate();
 
@@ -31,24 +40,20 @@ const BuyerForm = () => {
 
     useEffect(() => {
         const getDepartments = async () => {
-            const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
+            const response = await Axios({ url: 'http://localhost:1337/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
             setDepartments(lstDepartments.flat());
         }
 
         const getCities = async (departmentId) => {
-            const response = await Axios({ url: `http://localhost:1338/api/listcities/${departmentId}` });
+            const response = await Axios({ url: `http://localhost:1337/api/listcities/${departmentId}` });
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
-
         getDepartments();
-
-
         if (selectedDepartment !== "") {
             getCities(selectedDepartment);
         }
-
     }, [selectedDepartment]);
 
     function handleSelectDepartments(event) {
@@ -57,17 +62,16 @@ const BuyerForm = () => {
 
     function handleSelectCities(event) {
         setSelectedCity(event.target.value);
-        setBuyerData({
-            ...buyerData,
-
+        setVehicleData({
+            ...vehicleData,
             cityId: event.target.value
-        })
+        });
     }
 
     function handleChange(event) {
         const { name, value } = event.target;
         setBuyerData({
-            ...buyerData,
+            ...vehicleData,
             [name]: value
         });
     }
@@ -75,38 +79,29 @@ const BuyerForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
         try {
-            const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
+            const response = await Axios.post('http://localhost:1337/api/createVehicle', vehicleData);
             console.log(response.data);
 
             // Si la respuesta es exitosa, navega a la ruta especificada
-            navigate('/buyers/buyer');
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
-            // Si la respuesta es exitosa, navega a la ruta especificada
-            navigate('/buyers/buyer');
+            navigate('/Vehicles/Vehicle');
         } catch (e) {
             console.log(e);
         }
     }
 
     const handleCancel = async (event) => {
-        navigate('/buyers/buyer');
+        navigate('/Vehicles/Vehicle');
     }
-
 
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
             <CCol md={6}>
                 <CFormInput
                     type="text"
-                    id="personName"
-                    name="personName"
-                    label="First Name"
-                    value={buyerData.personName}
+                    id="vehiclePlate"
+                    name="vehiclePlate"
+                    label="Vehicle Plate"
+                    value={vehicleData.vehiclePlate}
                     onChange={handleChange}
                     required
                 />
@@ -114,10 +109,10 @@ const BuyerForm = () => {
             <CCol md={6}>
                 <CFormInput
                     type="text"
-                    id="personLastName"
-                    name="personLastName"
-                    label="Last Name"
-                    value={buyerData.personLastName}
+                    id="vehicleBrand"
+                    name="vehiclebrand"
+                    label="Vehicle Brand"
+                    value={vehicleData.vehicle}
                     onChange={handleChange}
                     required
                 />
@@ -125,43 +120,32 @@ const BuyerForm = () => {
             <CCol md={6}>
                 <CFormInput
                     type="text"
-                    id="personId"
-                    name="personId"
-                    label="Identification"
-                    value={buyerData.personId}
+                    id="vehicleLine"
+                    name="vehicleLine"
+                    label="Vehicle Model"
+                    value={vehicleData.vehicleLine}
                     onChange={handleChange}
                     required
                 />
             </CCol>
             <CCol md={6}>
                 <CFormInput
-                    type="number"
-                    id="personAge"
-                    name="personAge"
-                    label="Age"
-                    value={buyerData.personAge}
-                    onChange={handleChange}
-                    required
-                />
-            </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="email"
-                    id="personEmail"
-                    name="personEmail"
+                    type="text"
+                    id="vehicleYear"
+                    name="vehicleYear"
                     label="Email"
-                    value={buyerData.personEmail}
+                    value={vehicleData.vehicleYear}
                     onChange={handleChange}
                     required
                 />
             </CCol>
-            <CCol md={6}>
+            <CCol md={12}>
                 <CFormInput
                     type="text"
-                    id="personAddress"
-                    name="personAddress"
+                    id="vehicleAddress"
+                    name="vehicleAddress"
                     label="Address"
-                    value={buyerData.personAddress}
+                    value={vehicleData.vehicleAddress}
                     onChange={handleChange}
                     required
                 />
@@ -169,15 +153,15 @@ const BuyerForm = () => {
             <CCol md={12}>
                 <CFormInput
                     type="password"
-                    id="personPassword"
-                    name="personPassword"
+                    id="vehiclePassword"
+                    name="vehiclePassword"
                     label="Password"
-                    value={buyerData.personPassword}
+                    value={vehicleData.vehiclePassword}
                     onChange={handleChange}
                     required
                 />
             </CCol>
-            <CCol xs={6}>
+            <CCol xs={4}>
                 <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
                     <option value="">Select a department</option>
                     {departments.map(opcion => (
@@ -185,7 +169,6 @@ const BuyerForm = () => {
                     ))}
                 </CFormSelect>
             </CCol>
-
             <CCol xs={4}>
                 <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
                     <option value="">Select a city</option>
@@ -194,13 +177,44 @@ const BuyerForm = () => {
                     ))}
                 </CFormSelect>
             </CCol>
-            <CCol xs={12} className="d-flex justify-content-end mt-4">
-                <CButton color="secondary" className="me-2" onClick={handleCancel}>Cancel</CButton>
+            <CCol xs={12}>
                 <CButton color="primary" type="submit">Save</CButton>
+                <CButton color="secondary" onClick={() => setbuyerData({
+                    personName: '',
+                    personLastName: '',
+                    personAge: '',
+                    personEmail: '',
+                    personAddress: '',
+                    personPassword: '',
+                    cityId: ''
+                })}>Cancel</CButton>
             </CCol>
-
         </CForm>
     );
-}
 
-export default BuyerForm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};

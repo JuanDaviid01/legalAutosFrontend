@@ -28,7 +28,7 @@ const Publication = () => {
         getPublications();
     }, []);
     const handleCreatePublication = () => {
-        navigate('publications/publication');
+        navigate('/publications/publicationform');
     };
 
     function handleEdit() {
@@ -55,8 +55,10 @@ const Publication = () => {
     ];
 
         return (
-          <div>
-            <CButton onClick={handleCreatePublication} > New Publication </CButton>
+          <div> 
+            <div style={{ marginBottom: '20px' }}>
+            <CButton className="btn-primary" onClick={handleCreatePublication} > New Publication </CButton>
+            </div>
             <CTable>
                 <CTableHead>
                     <CTableRow>

@@ -1,4 +1,4 @@
-/*import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -17,12 +17,14 @@ const Vehicle = () => {
     const [vehicleData, setVehicleData] = useState([]);
 
     useEffect(() => {
-        const getVehicle = async () => {
+        const getVehicles = async () => {
             const response = await Axios({
                 url: 'http://localhost:1338/api/listVehicles',
             });
+            const lstVehicles = Object.keys(response.data).map(i => response.data[i]);
+            setVehicleData(lstVehicles.flat());
         };
-        getVehicle();
+        getVehicles();
     }, []);
     //----------------------------------------------------------------
     const handleCreateVehicle = () => {
@@ -54,11 +56,11 @@ const Vehicle = () => {
             dataIndex: 'vehicleYear',
         },
         {
-            title: 'Trasmision',
-            dataIndex: 'vehicleTrasmition',
+            title: 'Trasmission',
+            dataIndex: 'vehicleTrasmision',
         },
         {
-            title: 'C.c',
+            title: 'CC',
             dataIndex: 'vehicleCC',
         },
         {
@@ -91,11 +93,11 @@ const Vehicle = () => {
         },
         {
             title: 'Buy date',
-            dataIndex: 'vehicleBuyDate',
+            dataIndex: 'buyDate',
         },
         {
             title: 'Sell date',
-            dataIndex: 'vehicleSellDate',
+            dataIndex: 'sellDate',
         },
         {
             title: 'City id',
@@ -118,7 +120,7 @@ const Vehicle = () => {
                     </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                    {restaurantData.map((vehicle, index) => (
+                    {vehicleData.map((vehicle, index) => (
                         <CTableRow key={index}>
                             {columns.map((column, columnIndex) => (
                                 <CTableDataCell key={columnIndex}> {vehicle[column.dataIndex]} </CTableDataCell>
@@ -130,6 +132,5 @@ const Vehicle = () => {
         </div>
     )
 }
-export default Vehicle
+export default Vehicle;
 
-*/
