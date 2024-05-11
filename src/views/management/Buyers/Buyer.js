@@ -71,7 +71,9 @@ const Buyer = () => {
     ];
     return (
         <div>
-            <CButton onClick={handleCreateBuyer}>New buyer</CButton>
+            <div style={{ marginBottom: '20px' }}>
+            <CButton className="btn-primary" onClick={handleCreateBuyer}>New Buyer</CButton>
+            </div>
             <CTable>
                 <CTableHead>
                     <CTableRow>
