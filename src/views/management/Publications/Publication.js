@@ -27,18 +27,34 @@ const Publication = () => {
 
         getPublications();
     }, []);
+
     const handleCreatePublication = () => {
         navigate('/publications/publicationform');
     };
 
-    function handleEdit() {
-        navigate(``);
+    const handleEdit = (publicationId) => {
+        navigate(`/Publications/PublicationEditForm/${publicationId}`);
     };
 
+    const handleDelete = async (publicationId) => {
+        try {
+            var url = `http://localhost:1338/api/disablePublication/${publicationId}`;
+            const response = await Axios.put(url);
+            window.location.reload();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+ 
     const columns = [
         {
-            title: 'ID',
+            title: 'Publication ID',
             dataIndex: 'publicationId',
+        },
+        {
+            title: 'Person ID',
+            dataIndex: 'personId'
         },
         {
             title: 'Date',
@@ -52,12 +68,25 @@ const Publication = () => {
             title: 'Price',
             dataIndex: 'price'
         },
+        {
+            title: 'Options',
+            render: (publication) => (
+              <div>
+                <CButton color="primary" onClick={() => handleEdit(publication.publicationId)}>
+                  Edit
+                </CButton>
+                <CButton color="danger" onClick={() => handleDelete(publication.publicationId)}>
+                  Delete
+                </CButton>
+              </div>
+            )
+          }
     ];
 
-        return (
-          <div> 
+    return (
+        <div>
             <div style={{ marginBottom: '20px' }}>
-            <CButton className="btn-primary" onClick={handleCreatePublication} > New Publication </CButton>
+                <CButton className="btn-primary" onClick={handleCreatePublication}>New Publication</CButton>
             </div>
             <CTable>
                 <CTableHead>
@@ -70,9 +99,13 @@ const Publication = () => {
                 <CTableBody>
                     {publicationData.map((Publication, index) => (
                         <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => (
-                                <CTableDataCell key={columnIndex}> {Publication[column.dataIndex]} </CTableDataCell>
-                            ))}
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(Publication)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{Publication[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
                         </CTableRow>
                     ))}
                 </CTableBody>

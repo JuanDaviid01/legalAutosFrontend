@@ -14,6 +14,7 @@ const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIc
 const BuyerForm = React.lazy(() => import('./views/management/Buyers/BuyerForm'))
 const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
 const PublicationForm = React.lazy(() => import('./views/management/Publications/PublicationForm'))
+const PublicationEditForm = React.lazy(() => import('./views/management/Publications/PublicationEditForm'))
 const BuyerEditForm = React.lazy(() => import('./views/management/Buyers/BuyerEditForm'))
 
 
@@ -36,6 +37,7 @@ const routes = [
   { path: '/Publications', name: 'Publications', exact: true },
   { path: '/Publications/Publication', name: 'Publication', element: Publication },
   { path: '/Publications/PublicationForm', name: 'PublicationForm', element: PublicationForm},
+  { path: '/Publications/PublicationEditForm/:publicationId', name: 'PublicationEditForm', element: PublicationEditForm},
   //------------------------------------- 
   { path: '/sellers', name: 'Sellers', exact: true },
   { path: '/Sellers/Seller', name: 'Seller', element: Seller },
