@@ -21,7 +21,12 @@ const Vehicle = () => {
             const response = await Axios({
                 url: 'http://localhost:1338/api/listVehicles',
             });
-            const lstVehicles = Object.keys(response.data).map(i => response.data[i]);
+            const lstVehicles = response.data.data.map(item => ({
+                ...item,
+                vehicleSoat: item.vehicleSoat ? 'Valid' : 'Time out',
+                vehicleTecno: item.vehicleTecno ? 'Valid' : 'Time out',
+                vehicleSellPrice: item.vehicleSellPrice ?? '',
+            }));
             setVehicleData(lstVehicles.flat());
         };
         getVehicles();
@@ -111,30 +116,28 @@ const Vehicle = () => {
     return (
         <div>
             <div style={{ marginBottom: '20px' }}>
-            <CButton className="btn-primary" onClick={handleCreateVehicle}>New Vehicle</CButton>
+                <button style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px' }} onClick={handleCreateVehicle}>New Vehicle</button>
             </div>
-            <CTable>
-                <CTableHead>
-                    <CTableRow>
-                        {columns.map((column, index) => (
-                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
+            <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <thead>
+                        <tr>
+                            {columns.map((column, index) => (
+                                <th key={index} style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{column.title}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {vehicleData.map((vehicle, index) => (
+                            <tr key={index}>
+                                {columns.map((column, columnIndex) => (
+                                    <td key={columnIndex} style={{ padding: '8px', borderBottom: '1px solid #ddd', whiteSpace: 'nowrap' }}>{vehicle[column.dataIndex]}</td>
+                                ))}
+                            </tr>
                         ))}
-                    </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                    {vehicleData.map((vehicle, index) => (
-                        <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => {
-                                if (column.render) {
-                                    return <CTableDataCell key={columnIndex}>{column.render(vehicle)}</CTableDataCell>;
-                                } else {
-                                    return <CTableDataCell key={columnIndex}>{vehicle[column.dataIndex]}</CTableDataCell>;
-                                }
-                            })}
-                        </CTableRow>
-                    ))}
-                </CTableBody>
-            </CTable>
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

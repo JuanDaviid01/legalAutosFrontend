@@ -26,7 +26,7 @@ const routes = [
   { path: '/buyers', name: 'Buyers', exact: true },
   { path: '/Buyers/Buyer', name: 'Buyer', element: Buyer },
   { path: '/buyers/buyerform', name: 'BuyerForm', element: BuyerForm },
-  { path: '/buyers/buyerEditForm/:personId', name: 'BuyerEditForm', element: BuyerEditForm },
+  //{ path: '/buyers/buyerEditForm/:personId', name: 'BuyerEditForm', element: BuyerEditForm },
   //-------------------------------------
   { path: '/Publications', name: 'Publications', exact: true },
   { path: '/Publications/Publication', name: 'Publication', element: Publication },
