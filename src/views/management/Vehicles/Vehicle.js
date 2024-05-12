@@ -40,7 +40,7 @@ const Vehicle = () => {
     function handleEditVehicle(vehicleId) {
         navigate(`/vehicles/VehicleEditForm/${vehicleId}`);
     };
-    const handleDelete = async(vehicleId) => {
+    const handleDeleteVehicle = async(vehicleId) => {
         try {
           var url = `http://localhost:1338/api/disableVehicle/${vehicleId}`;
           const response = await Axios.put(url);
