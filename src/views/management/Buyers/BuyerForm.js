@@ -37,7 +37,7 @@ const BuyerForm = () => {
         }
 
         const getCities = async (departmentId) => {
-            const response = await Axios({ url: 'http://localhost:1338/api/listcities/${departmentId} '});
+            const response = await Axios({ url: `http://localhost:1338/api/listcities/${departmentId}` });
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
