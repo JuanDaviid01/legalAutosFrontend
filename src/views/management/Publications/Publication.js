@@ -46,7 +46,7 @@ const Publication = () => {
             console.log(e);
         }
     }
-
+ 
     const columns = [
         {
             title: 'Publication ID',
