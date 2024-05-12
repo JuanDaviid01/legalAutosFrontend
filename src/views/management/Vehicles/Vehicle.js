@@ -21,7 +21,12 @@ const Vehicle = () => {
             const response = await Axios({
                 url: 'http://localhost:1338/api/listVehicles',
             });
-            const lstVehicles = Object.keys(response.data).map(i => response.data[i]);
+            const lstVehicles = response.data.data.map(item => ({
+                ...item,
+                vehicleSoat: item.vehicleSoat ? 'Valid' : 'Time out',
+                vehicleTecno: item.vehicleTecno ? 'Valid' : 'Time out',
+                vehicleSellPrice: item.vehicleSellPrice ?? '',
+            }));
             setVehicleData(lstVehicles.flat());
         };
         getVehicles();
@@ -31,8 +36,8 @@ const Vehicle = () => {
         navigate('/vehicles/vehicleForm');
     };
 
-    function handleEditVehicle() {
-        navigate('');
+    function handleEditVehicle(vehicleId) {
+        navigate(`/vehicles/VehicleEditForm/${vehicleId}`);
     };
     const columns = [
         {
@@ -106,6 +111,16 @@ const Vehicle = () => {
         {
             title: 'Person id',
             dataIndex: 'personId',
+        },
+        {
+            title: 'Options',
+            render: (vehicle) =>(
+                <div>
+                    <CButton color="primary" onClick={() => handleEditVehicle(vehicle.vehicleId)}>Edit</CButton>
+                    <CButton color="danger" onClick={() => handleDeleteVehicle(vehicle.vehicleId)}>Delete</CButton>
+
+                </div>
+            ),
         }
     ]
     return (

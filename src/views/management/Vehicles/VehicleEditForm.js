@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
-
 import Axios from "axios";
 import {
     CForm,
     CCol,
     CFormInput,
     CFormSelect,
-    CFormCheck,
     CButton,
 } from '@coreui/react'
 
-const VehicleForm = () => {
+const VehicleEditForm = () => {
+    const { vehicleId } = useParams();
 
     const [vehicleData, setVehicleData] = useState({
         vehiclePlate: '',
@@ -47,6 +47,12 @@ const VehicleForm = () => {
     const [selectedTecno, setSelectedTecno] = useState('');
 
     useEffect(() => {
+
+        const getVehicles = async () => {
+            const response = await Axios({ url: `http://localhost:1338/api/getVehicle/${vehicleId}` });
+            const vehicle = response.data.data
+            setVehicleData(vehicle);
+        }
         const getDepartments = async () => {
             const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
@@ -58,10 +64,12 @@ const VehicleForm = () => {
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
+        getVehicles();
         getDepartments();
-        if (selectedDepartment !== "") {
+
+        if (selectedDepartment !== "")
             getCities(selectedDepartment);
-        }
+
     }, [selectedDepartment]);
 
     function handleSelectDepartments(event) {
@@ -72,8 +80,9 @@ const VehicleForm = () => {
         setSelectedCity(event.target.value);
         setVehicleData({
             ...vehicleData,
+
             cityId: event.target.value
-        });
+        })
     }
     function handleSelectSoat(event) {
         setSelectedSoat(event.target.value);
@@ -116,34 +125,24 @@ const VehicleForm = () => {
             ...vehicleData,
             [name]: value
         });
-        console.log(`Fecha actual de ${name}: ${value}`);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
         try {
-
-            const formattedBuyDate = vehicleData.buyDate.split('/').reverse().join('/');
-            const formattedSellDate = vehicleData.sellDate.split('/').reverse().join('/');
-
-
-            const formattedData = {
-                ...vehicleData,
-                buyDate: formattedBuyDate,
-                sellDate: formattedSellDate,
-            };
-            const response = await Axios.post('http://localhost:1338/api/createVehicle', formattedData);
+            const response = await Axios.put(`http://localhost:1338/api/updateVehicle/${vehicleId}`, vehicleData);
             console.log(response.data);
+
             // Si la respuesta es exitosa, navega a la ruta especificada
-            navigate('/Vehicles/Vehicle');
+            navigate('/vehicles/Vehicle');
         } catch (e) {
             console.log(e);
         }
     }
-
     const handleCancel = async (event) => {
-        navigate('/Vehicles/Vehicle');
+        navigate('/vehicles/vehicle');
     }
+
 
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
@@ -334,11 +333,11 @@ const VehicleForm = () => {
                     required
                 />
             </CCol>
-            <CCol xs={6}>
+            <CCol xs={12} className="d-flex justify-content-end mt-4">
+                <CButton color="secondary" className="me-2" onClick={handleCancel}>Cancel</CButton>
                 <CButton color="primary" type="submit">Save</CButton>
-                <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
             </CCol>
         </CForm>
     );
 }
-export default VehicleForm
+export default VehicleEditForm
