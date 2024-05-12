@@ -17,7 +17,6 @@ const SellerEditForm = () => {
         personName: '',
         personLastName: '',
         personAge: '',
-        personId: '',
         personEmail: '',
         personAddress: "",
         personPassword: "",
@@ -32,7 +31,7 @@ const SellerEditForm = () => {
     useEffect(() => {
 
         const getSeller = async () => {
-            const response = await Axios({ url: 'http://localhost:1337/api/getseller/${personId}' });
+            const response = await Axios({ url: `http://localhost:1338/api/getSeller/${personId}` });
             const seller = response.data.data;
             setSellerData(seller);
 
@@ -40,13 +39,13 @@ const SellerEditForm = () => {
 
 
         const getDepartments = async () => {
-            const response = await Axios({ url: 'http://localhost:1337/api/listdepartments' });
+            const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
             setDepartments(lstDepartments.flat());
         }
 
         const getCities = async (departmentId) => {
-            const response = await Axios({ url: `http://localhost:1337/api/listcities/${departmentId}` });
+            const response = await Axios({ url: `http://localhost:1338/api/listcities/${departmentId}` });
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
@@ -64,8 +63,8 @@ const SellerEditForm = () => {
 
     function handleSelectCities(event) {
         setSelectedCity(event.target.value);
-        setRestaurantData({
-            ...restaurantData,
+        setSellerData({
+            ...sellerData,
             cityId: event.target.value
         })
     }
@@ -78,14 +77,11 @@ const SellerEditForm = () => {
         });
     }
 
-    function handleReturn(event) {
-        navigate('/sellers/seller');
-    }
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await Axios.put('http://localhost:1337/api/updateseller/${personId}', sellerData);
+            const response = await Axios.put(`http://localhost:1338/api/updateseller/${personId}`, sellerData);
             console.log(response.data);
             navigate('/sellers/seller');
         }
@@ -98,7 +94,24 @@ const SellerEditForm = () => {
         navigate('/sellers/seller');
     }
     return (
+        
         <CForm className="row g-3" onSubmit={handleSubmit}>
+            <CCol xs={6}>
+                <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
+                    <option value="">Select a department</option>
+                    {departments.map(opcion => (
+                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
+                    ))}
+                </CFormSelect>
+            </CCol>
+            <CCol xs={6}>
+                <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
+                    <option value="">Select a city</option>
+                    {cities.map(opcion => (
+                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
+                    ))}
+                </CFormSelect>
+            </CCol>
             <CCol md={6}>
                 <CFormInput
                     type="text"
@@ -175,23 +188,6 @@ const SellerEditForm = () => {
                     onChange={handleChange}
                     required
                 />
-            </CCol>
-
-            <CCol xs={6}>
-                <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
-                    <option value="">Select a department</option>
-                    {departments.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
-                    ))}
-                </CFormSelect>
-            </CCol>
-            <CCol xs={6}>
-                <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
-                    <option value="">Select a city</option>
-                    {cities.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
-                    ))}
-                </CFormSelect>
             </CCol>
             <CCol xs={12} className="d-flex justify-content-end mt-4">
                 <CButton color="secondary" className="me-2" onClick={handleCancel}>Cancel</CButton>
