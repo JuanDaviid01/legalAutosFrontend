@@ -31,8 +31,8 @@ const Publication = () => {
         navigate('/publications/publicationform');
     };
 
-    function handleEdit() {
-        navigate(``);
+    const handleEdit = (id) => {
+        navigate(`/publications/publicationseditform/${id}`);
     };
 
     const columns = [
@@ -51,6 +51,12 @@ const Publication = () => {
         {
             title: 'Price',
             dataIndex: 'price'
+        },
+        {
+            title: 'Actions',
+            render: (publication) => (
+                <CButton onClick={() => handleEdit(publication.publicationId)}>Edit</CButton>
+            )
         },
     ];
 

@@ -11,13 +11,16 @@ import {
 
 const PublicationForm = () => {
     const [publicationData, setPublicationData] = useState({
-        publicationId: '',
+        personId: '',
         vehicleId: '',
         publicationDate: '',    
         state:'',
         price: ''
     });
     const navigate = useNavigate();
+
+    const [selectedState, setSelectedState] = useState('');
+
 
     function handleChange(event){
         const {name, value} = event.target;
@@ -31,20 +34,30 @@ const PublicationForm = () => {
         navigate('/publications/publication');
     }
 
-    const handleSubmit = async (event)=>{
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        try{    
+        try {
+            if (publicationData && publicationData.publicationDate !== undefined) {
                 // Convertir el precio a float antes de enviarlo al backend
                 const floatValue = parseFloat(publicationData.price);
+    
+                // Convertir la fecha al formato AAAA/MM/DD antes de enviarla al backend
+                const formattedDate = publicationData.publicationDate.split('/').reverse().join('/');
+    
+                // Modificar la variable dataToSend en lugar de redeclararla
                 const dataToSend = {
-                ...publicationData,
-                price: floatValue
-            };
-            
-            const response = await Axios.post('http://localhost:1338/api/createPublication', dataToSend);
-            console.log(response.data);
-            navigate('/publications/publication');
-        } catch (e){
+                    ...publicationData,
+                    price: floatValue,
+                    publicationDate: formattedDate
+                };
+    
+                const response = await Axios.post('http://localhost:1338/api/createPublication', dataToSend);
+                console.log(response.data);
+                navigate('/publications/Publication');
+            } else {
+                console.log("publicationData o publicationData.publicationDate no está definido.");
+            }
+        } catch (e) {
             console.log(e);
         }
     }
@@ -53,15 +66,23 @@ const PublicationForm = () => {
         navigate('/publications/publication');
     }
 
+    function handleSelectState(event) {
+        setSelectedState(event.target.value);
+        setPublicationData({
+            ...publicationData,
+            state: event.target.value
+        });
+    }
+
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
             <CCol md={6}>
                 <CFormInput
                     type="number"
-                    id="publicationId"
-                    name="publicationId"
-                    label="Publication ID"
-                    value={publicationData.publicationId}
+                    id="personId"
+                    name="personId"
+                    label="Person ID"
+                    value={publicationData.personId}
                     onChange={handleChange}
                     required
                 />
@@ -88,16 +109,12 @@ const PublicationForm = () => {
                     required
                 />
             </CCol>
-            <CCol md={6}>
-                <CFormInput
-                    type="text"
-                    id="state"
-                    name="state"
-                    label="Publication State"
-                    value={publicationData.state}
-                    onChange={handleChange}
-                    required
-                />
+            <CCol xs={4}>
+                <CFormSelect id="stateOptions" label="State" value={selectedState} onChange={handleSelectState}>
+                    <option value="">Select status</option>
+                    <option key="avaliable" value="avaliable">Avaliable</option>
+                    <option key="unvaliable" value="unvaliable">Unvaliable</option>
+                </CFormSelect>
             </CCol>
             <CCol md={6}>
                 <CFormInput
@@ -112,6 +129,7 @@ const PublicationForm = () => {
             </CCol>
             <CCol xs={12}>
                 <CButton color="primary" type="submit">Save</CButton>
+                
                 <CButton color="secondary" onClick={handleCancel}>Cancel</CButton>
             </CCol>
         </CForm>

@@ -1,0 +1,70 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Axios from 'axios';
+import {
+    CForm,
+    CCol,
+    CFormInput,
+    CFormSelect,
+    CButton
+} from '@coreui/react';
+
+const PublicationEditForm = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [publicationData, setPublicationData] = useState({
+        personId: '',
+        vehicleId: '',
+        publicationDate: '',    
+        state:'',
+        price: ''
+    });
+    const [selectedState, setSelectedState] = useState('');
+
+    useEffect(() => {
+        // Aquí deberías cargar los datos de la publicación con el id proporcionado
+        // utilizando una llamada a la API y luego establecer esos datos en el estado
+    }, [id]);
+
+    function handleChange(event){
+        const {name, value} = event.target;
+        setPublicationData({
+            ...publicationData,
+            [name]: value
+        });
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            // Aquí deberías enviar los datos actualizados al backend para actualizar la publicación
+            const response = await Axios.put(`http://localhost:1338/api/updatePublication/${id}`, publicationData);
+            console.log(response.data);
+            navigate('/publications/publication');
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const handleCancel = async (event) => {
+        navigate('/publications/publication');
+    }
+
+    function handleSelectState(event) {
+        setSelectedState(event.target.value);
+        setPublicationData({
+            ...publicationData,
+            state: event.target.value
+        });
+    }
+
+    return (
+        <CForm className="row g-3" onSubmit={handleSubmit}>
+        //    {/* Aquí deberías mostrar los campos de edición con los valores de publicationData */}
+        //    {/* Puedes usar componentes de formulario como CFormInput y CFormSelect */}
+        //    {/* Asegúrate de manejar los cambios en los campos y el envío del formulario */}
+        </CForm>
+    );
+}
+
+export default PublicationEditForm;
