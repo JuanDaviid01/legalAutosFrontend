@@ -12,6 +12,7 @@ import {
     CTableDataCell
 } from '@coreui/react';
 
+
 const Vehicle = () => {
     const navigate = useNavigate();
     const [vehicleData, setVehicleData] = useState([]);
