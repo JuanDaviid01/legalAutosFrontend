@@ -32,8 +32,19 @@ const Seller = () => {
         navigate('/sellers/sellerForm');
     };
 
-    function handleEdit() {
-        navigate('');
+    function handleEdit(personId) {
+        navigate(`/sellers/sellerEditForm/${personId}`);
+    }
+
+    const handleDelete = async (personId) => {
+        try {
+            var url = `http://localhost:1338/api/disableseller/${personId}`;
+            const response = await Axios.put(url);
+            window.location.reload();
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     const columns = [
@@ -67,6 +78,17 @@ const Seller = () => {
         },
         {
             title: 'Options',
+            render: (seller) => (
+                <div>
+                    <CButton color="primary" onClick={() => handleEdit(seller.personId)}>
+                        Edit
+                    </CButton>
+                    <CButton color="danger" onClick={() => handleDelete(seller.personId)}>
+                        Delete
+                    </CButton>
+                    
+                </div>
+            ),
         },
     ];
 

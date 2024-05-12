@@ -7,6 +7,7 @@ const VehicleForm = React.lazy(() => import('./views/management/Vehicles/Vehicle
 
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const SellerForm = React.lazy(() => import('./views/management/Sellers/SellerForm'))
+const SellerEditForm = React.lazy(() => import('./views/management/Sellers/SellerEditForm'))
 const Buyer = React.lazy(() => import('./views/management/Buyers/Buyer'))
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
 const BuyerForm = React.lazy(() => import('./views/management/Buyers/BuyerForm'))
@@ -35,7 +36,8 @@ const routes = [
   //------------------------------------- 
   { path: '/sellers', name: 'Sellers', exact: true },
   { path: '/Sellers/Seller', name: 'Seller', element: Seller },
-  { path: '/sellers/sellerForm', name: 'SellerForm', element: SellerForm},
+  { path: '/sellers/sellerForm', name: 'SellerForm', element: SellerForm },
+  { path: '/sellers/sellerEditForm/:personId', name: 'SellerEditForm', element: SellerEditForm},
   //-------------------------------------
   { path: '/icons', exact: true, name: 'Icons', element: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
