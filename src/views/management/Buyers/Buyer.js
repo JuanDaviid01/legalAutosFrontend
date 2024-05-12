@@ -37,6 +37,17 @@ const Buyer = () => {
         navigate(`/buyers/buyerEditForm/${personId}`);
     };
 
+    const handleDelete = async(personId) => {
+        try {
+          var url = `http://localhost:1338/api/disablebuyer/${personId}`;
+          const response = await Axios.put(url);
+          window.location.reload();
+        }
+        catch (e) {
+          console.log(e);
+        }
+      }
+
     const columns = [
         {
             title: 'Name',
@@ -73,7 +84,7 @@ const Buyer = () => {
                 <CButton color="primary" onClick={() => handleEdit(buyer.personId)}>
                   Edit
                 </CButton>
-                <CButton color="danger" onClick={() => handleDelete(buyer)}>
+                <CButton color="danger" onClick={() => handleDelete(buyer.personId)}>
                   Delete
                 </CButton>
               </div>

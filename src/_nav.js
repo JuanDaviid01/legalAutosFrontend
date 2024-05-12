@@ -5,7 +5,8 @@ import {
   cilGarage,
   cilBorderAll,
   cilHandshake,
-  cilCash
+  cilCash,
+  cilPuzzle
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -30,8 +31,21 @@ const _nav = [
           color: 'success',
         },
       },
-
     ],
+  },
+
+  {
+        component: CNavTitle,
+    name: 'Management'
+  },
+  {
+    component: CNavGroup,
+    name: 'Vehicles',
+    to: '/Vehicle',
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      
+    ]
   },
   {
     component: CNavGroup,

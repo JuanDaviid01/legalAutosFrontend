@@ -12,7 +12,7 @@ import {
 
 const BuyerEditForm = () => {
 
-    const {personId} = useParams();
+    const { personId } = useParams();
 
 
     const [buyerData, setBuyerData] = useState({
@@ -33,10 +33,10 @@ const BuyerEditForm = () => {
 
     useEffect(() => {
         const getBuyers = async () => {
-            const response = await Axios({url: `http://localhost:1338/api/getBuyer/${personId}`});
+            const response = await Axios({ url: `http://localhost:1338/api/getBuyer/${personId}` });
             const buyer = response.data.data
             setBuyerData(buyer);
-        }   
+        }
         const getDepartments = async () => {
             const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
@@ -70,18 +70,19 @@ const BuyerEditForm = () => {
         })
     }
 
-    function handleChange(event) {
-        const { name, value } = event.target;
+    function handleChange(event){
+        const {name, value} = event.target;
         setBuyerData({
             ...buyerData,
             [name]: value
         });
     }
 
+
     const handleSubmit = async (event) => {
         event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
         try {
-            const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
+            const response = await Axios.put(`http://localhost:1338/api/updatebuyer/${personId}`, buyerData);
             console.log(response.data);
 
             // Si la respuesta es exitosa, navega a la ruta especificada
@@ -98,6 +99,22 @@ const BuyerEditForm = () => {
 
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
+            <CCol xs={6}>
+                <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
+                    <option value="">Select a department</option>
+                    {departments.map(opcion => (
+                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
+                    ))}
+                </CFormSelect>
+            </CCol>
+            <CCol xs={6}>
+                <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
+                    <option value="">Select a city</option>
+                    {cities.map(opcion => (
+                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
+                    ))}
+                </CFormSelect>
+            </CCol>
             <CCol md={6}>
                 <CFormInput
                     type="text"
@@ -163,22 +180,6 @@ const BuyerEditForm = () => {
                     onChange={handleChange}
                     required
                 />
-            </CCol>
-            <CCol xs={6}>
-                <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
-                    <option value="">Select a department</option>
-                    {departments.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
-                    ))}
-                </CFormSelect>
-            </CCol>
-            <CCol xs={6}>
-                <CFormSelect id="cityOptions" label="City" value={selectedCity} onChange={handleSelectCities} >
-                    <option value="">Select a city</option>
-                    {cities.map(opcion => (
-                        <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
-                    ))}
-                </CFormSelect>
             </CCol>
             <CCol xs={12} className="d-flex justify-content-end mt-4">
                 <CButton color="secondary" className="me-2" onClick={handleCancel}>Cancel</CButton>
