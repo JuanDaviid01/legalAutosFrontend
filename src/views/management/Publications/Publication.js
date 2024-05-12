@@ -33,7 +33,7 @@ const Publication = () => {
     };
 
     const handleEdit = (publicationId) => {
-        navigate(`/publications/publicationseditform/${publicationId}`);
+        navigate(`/Publications/PublicationEditForm/${publicationId}`);
     };
 
     const handleDelete = (publicationId) => {
@@ -78,30 +78,34 @@ const Publication = () => {
     ];
 
     return (
-        <div> 
-          <div style={{ marginBottom: '20px' }}>
-          <CButton className="btn-primary" onClick={handleCreatePublication} > New Publication </CButton>
-          </div>
-          <CTable>
-              <CTableHead>
-                  <CTableRow>
-                      {columns.map((column, index) => (
-                          <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
-                      ))}
-                  </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                  {publicationData.map((Publication, index) => (
-                      <CTableRow key={index}>
-                          {columns.map((column, columnIndex) => (
-                              <CTableDataCell key={columnIndex}> {Publication[column.dataIndex]} </CTableDataCell>
-                          ))}
-                      </CTableRow>
-                  ))}
-              </CTableBody>
-          </CTable>
-      </div>
-  );
+        <div>
+            <div style={{ marginBottom: '20px' }}>
+                <CButton className="btn-primary" onClick={handleCreatePublication}>New Publication</CButton>
+            </div>
+            <CTable>
+                <CTableHead>
+                    <CTableRow>
+                        {columns.map((column, index) => (
+                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
+                        ))}
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                    {publicationData.map((Publication, index) => (
+                        <CTableRow key={index}>
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(Publication)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{Publication[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
+                        </CTableRow>
+                    ))}
+                </CTableBody>
+            </CTable>
+        </div>
+    );
 }
 
 export default Publication;
