@@ -12,6 +12,7 @@ const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIc
 const BuyerForm = React.lazy(() => import('./views/management/Buyers/BuyerForm'))
 const Publication = React.lazy(() => import('./views/management/Publications/Publication'))
 const PublicationForm = React.lazy(() => import('./views/management/Publications/PublicationForm'))
+const BuyerEditForm = React.lazy(() => import('./views/management/Buyers/BuyerEditForm'))
 
 
 
