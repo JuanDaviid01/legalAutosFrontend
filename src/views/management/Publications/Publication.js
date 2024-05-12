@@ -27,18 +27,28 @@ const Publication = () => {
 
         getPublications();
     }, []);
+
     const handleCreatePublication = () => {
         navigate('/publications/publicationform');
     };
 
-    const handleEdit = (id) => {
-        navigate(`/publications/publicationseditform/${id}`);
+    const handleEdit = (publicationId) => {
+        navigate(`/publications/publicationseditform/${publicationId}`);
+    };
+
+    const handleDelete = (publicationId) => {
+        // Aquí deberías implementar la lógica para eliminar la publicación con el ID dado.
+        // Puedes usar Axios u otra biblioteca para hacer una solicitud de eliminación al servidor.
     };
 
     const columns = [
         {
-            title: 'ID',
+            title: 'Publication ID',
             dataIndex: 'publicationId',
+        },
+        {
+            title: 'Person ID',
+            dataIndex: 'personId'
         },
         {
             title: 'Date',
@@ -53,38 +63,45 @@ const Publication = () => {
             dataIndex: 'price'
         },
         {
-            title: 'Actions',
+            title: 'Options',
             render: (publication) => (
-                <CButton onClick={() => handleEdit(publication.publicationId)}>Edit</CButton>
+              <div>
+                <CButton color="primary" onClick={() => handleEdit(publication.publicationId)}>
+                  Edit
+                </CButton>
+                <CButton color="danger" onClick={() => handleDelete(publication.publicationId)}>
+                  Delete
+                </CButton>
+              </div>
             )
-        },
+          }
     ];
 
-        return (
-          <div> 
-            <div style={{ marginBottom: '20px' }}>
-            <CButton className="btn-primary" onClick={handleCreatePublication} > New Publication </CButton>
-            </div>
-            <CTable>
-                <CTableHead>
-                    <CTableRow>
-                        {columns.map((column, index) => (
-                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
-                        ))}
-                    </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                    {publicationData.map((Publication, index) => (
-                        <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => (
-                                <CTableDataCell key={columnIndex}> {Publication[column.dataIndex]} </CTableDataCell>
-                            ))}
-                        </CTableRow>
-                    ))}
-                </CTableBody>
-            </CTable>
-        </div>
-    );
+    return (
+        <div> 
+          <div style={{ marginBottom: '20px' }}>
+          <CButton className="btn-primary" onClick={handleCreatePublication} > New Publication </CButton>
+          </div>
+          <CTable>
+              <CTableHead>
+                  <CTableRow>
+                      {columns.map((column, index) => (
+                          <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
+                      ))}
+                  </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                  {publicationData.map((Publication, index) => (
+                      <CTableRow key={index}>
+                          {columns.map((column, columnIndex) => (
+                              <CTableDataCell key={columnIndex}> {Publication[column.dataIndex]} </CTableDataCell>
+                          ))}
+                      </CTableRow>
+                  ))}
+              </CTableBody>
+          </CTable>
+      </div>
+  );
 }
 
 export default Publication;
