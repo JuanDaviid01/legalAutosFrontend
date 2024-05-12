@@ -41,16 +41,6 @@ const _nav = [
           text: 'NEW',
         },
       },
-      {
-        component: CNavItem,
-        name: 'CoreUI Flags',
-        to: '/icons/flags',
-      },
-      {
-        component: CNavItem,
-        name: 'CoreUI Brands',
-        to: '/icons/brands',
-      },
     ],
   },
 
