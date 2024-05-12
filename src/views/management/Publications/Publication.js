@@ -36,10 +36,16 @@ const Publication = () => {
         navigate(`/Publications/PublicationEditForm/${publicationId}`);
     };
 
-    const handleDelete = (publicationId) => {
-        // Aquí deberías implementar la lógica para eliminar la publicación con el ID dado.
-        // Puedes usar Axios u otra biblioteca para hacer una solicitud de eliminación al servidor.
-    };
+    const handleDelete = async (publicationId) => {
+        try {
+            var url = `http://localhost:1338/api/disablePublication/${publicationId}`;
+            const response = await Axios.put(url);
+            window.location.reload();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     const columns = [
         {
