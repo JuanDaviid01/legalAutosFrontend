@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import Axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Axios from 'axios';
 import {
     CForm,
     CCol,
@@ -10,46 +9,48 @@ import {
     CButton
 } from '@coreui/react'
 
-const BuyerEditForm = () => {
+const SellerEditForm = () => {
 
-    const {personId} = useParams();
+    const { personId } = useParams();
 
-
-    const [buyerData, setBuyerData] = useState({
+    const [sellerData, setSellerData] = useState({
         personName: '',
         personLastName: '',
         personAge: '',
+        personId: '',
         personEmail: '',
         personAddress: "",
         personPassword: "",
         cityId: 0,
     });
-    const navigate = useNavigate();
-
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const getBuyers = async () => {
-            const response = await Axios({url: `http://localhost:1338/api/getBuyer/${personId}`});
-            const buyer = response.data.data
-            setBuyerData(buyer);
-        }   
+
+        const getSeller = async () => {
+            const response = await Axios({ url: 'http://localhost:1337/api/getseller/${personId}' });
+            const seller = response.data.data;
+            setSellerData(seller);
+
+        }
+
+
         const getDepartments = async () => {
-            const response = await Axios({ url: 'http://localhost:1338/api/listdepartments' });
+            const response = await Axios({ url: 'http://localhost:1337/api/listdepartments' });
             const lstDepartments = Object.keys(response.data).map(i => response.data[i]);
             setDepartments(lstDepartments.flat());
         }
 
         const getCities = async (departmentId) => {
-            const response = await Axios({ url: `http://localhost:1338/api/listcities/${departmentId}` });
+            const response = await Axios({ url: `http://localhost:1337/api/listcities/${departmentId}` });
             const lstCities = Object.keys(response.data).map(i => response.data[i]);
             setCities(lstCities.flat());
         }
-
-        getBuyers();
+        getSeller();
         getDepartments();
 
         if (selectedDepartment !== "")
@@ -63,39 +64,39 @@ const BuyerEditForm = () => {
 
     function handleSelectCities(event) {
         setSelectedCity(event.target.value);
-        setBuyerData({
-            ...buyerData,
-
+        setRestaurantData({
+            ...restaurantData,
             cityId: event.target.value
         })
     }
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setBuyerData({
-            ...buyerData,
+        setSellerData({
+            ...sellerData,
             [name]: value
         });
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
-        try {
-            const response = await Axios.post('http://localhost:1338/api/createbuyer', buyerData);
-            console.log(response.data);
+    function handleReturn(event) {
+        navigate('/sellers/seller');
+    }
 
-            // Si la respuesta es exitosa, navega a la ruta especificada
-            navigate('/buyers/buyer');
-        } catch (e) {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await Axios.put('http://localhost:1337/api/updateseller/${personId}', sellerData);
+            console.log(response.data);
+            navigate('/sellers/seller');
+        }
+        catch (e) {
             console.log(e);
         }
     }
 
     const handleCancel = async (event) => {
-        navigate('/buyers/buyer');
+        navigate('/sellers/seller');
     }
-
-
     return (
         <CForm className="row g-3" onSubmit={handleSubmit}>
             <CCol md={6}>
@@ -104,7 +105,7 @@ const BuyerEditForm = () => {
                     id="personName"
                     name="personName"
                     label="First Name"
-                    value={buyerData.personName}
+                    value={sellerData.personName}
                     onChange={handleChange}
                     required
                 />
@@ -115,7 +116,18 @@ const BuyerEditForm = () => {
                     id="personLastName"
                     name="personLastName"
                     label="Last Name"
-                    value={buyerData.personLastName}
+                    value={sellerData.personLastName}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol md={6}>
+                <CFormInput
+                    type="text"
+                    id="personId"
+                    name="personId"
+                    label="Identification"
+                    value={sellerData.personId}
                     onChange={handleChange}
                     required
                 />
@@ -126,7 +138,7 @@ const BuyerEditForm = () => {
                     id="personAge"
                     name="personAge"
                     label="Age"
-                    value={buyerData.personAge}
+                    value={sellerData.personAge}
                     onChange={handleChange}
                     required
                 />
@@ -137,7 +149,7 @@ const BuyerEditForm = () => {
                     id="personEmail"
                     name="personEmail"
                     label="Email"
-                    value={buyerData.personEmail}
+                    value={sellerData.personEmail}
                     onChange={handleChange}
                     required
                 />
@@ -148,7 +160,7 @@ const BuyerEditForm = () => {
                     id="personAddress"
                     name="personAddress"
                     label="Address"
-                    value={buyerData.personAddress}
+                    value={sellerData.personAddress}
                     onChange={handleChange}
                     required
                 />
@@ -159,11 +171,12 @@ const BuyerEditForm = () => {
                     id="personPassword"
                     name="personPassword"
                     label="Password"
-                    value={buyerData.personPassword}
+                    value={sellerData.personPassword}
                     onChange={handleChange}
                     required
                 />
             </CCol>
+
             <CCol xs={6}>
                 <CFormSelect id="departmentOptions" label="Department" value={selectedDepartment} onChange={handleSelectDepartments} >
                     <option value="">Select a department</option>
@@ -184,9 +197,8 @@ const BuyerEditForm = () => {
                 <CButton color="secondary" className="me-2" onClick={handleCancel}>Cancel</CButton>
                 <CButton color="primary" type="submit">Save</CButton>
             </CCol>
-
         </CForm>
     );
 }
 
-export default BuyerEditForm 
+export default SellerEditForm
