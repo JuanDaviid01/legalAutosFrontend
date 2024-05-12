@@ -24,6 +24,10 @@ const Buyer = () => {
             const lstBuyers = Object.keys(response.data).map(i => response.data[i]);
             setBuyerData(lstBuyers.flat());
         };
+//
+//
+/*gofdndssd*/
+//
 
         getBuyers();
     }, []);
