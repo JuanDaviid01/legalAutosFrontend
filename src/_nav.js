@@ -33,11 +33,6 @@ const _nav = [
       },
     ],
   },
-
-  {
-        component: CNavTitle,
-    name: 'Management'
-  },
   {
     component: CNavGroup,
     name: 'Vehicles',
