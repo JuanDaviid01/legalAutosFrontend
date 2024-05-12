@@ -35,15 +35,6 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Vehicles',
-    to: '/Vehicle',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-    items: [
-      
-    ]
-  },
-  {
-    component: CNavGroup,
     name: 'Sellers',
     icon: <CIcon icon={cilHandshake} customClassName="nav-icon" />,
     items: [
@@ -65,7 +56,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'vehicle list',
+        name: 'Vehicle list',
         to: '/Vehicles/Vehicle',
         badge: {
           color: 'success',
