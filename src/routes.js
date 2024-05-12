@@ -4,6 +4,7 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Vehicle = React.lazy(() => import('./views/management/Vehicles/Vehicle'))
 const VehicleForm = React.lazy(() => import('./views/management/Vehicles/VehicleForm'))
+const VehicleEditForm = React.lazy(() => import('./views/management/Vehicles/VehicleEditForm'))
 
 const Seller = React.lazy(() => import('./views/management/Sellers/Seller'))
 const SellerForm = React.lazy(() => import('./views/management/Sellers/SellerForm'))
@@ -24,11 +25,13 @@ const routes = [
   { path: '/Vehicles', name: 'Vehicles', exact: true },
   { path: '/Vehicles/Vehicle', name: 'Vehicle list', element: Vehicle },
   {path: '/Vehicles/VehicleForm', name: 'vehicle Form', element: VehicleForm },
+  { path: '/Vehicles/VehicleEditForm/:vehicleId', name: 'VehicleEditForm', element: VehicleEditForm },
+
   //-------------------------------------
   { path: '/buyers', name: 'Buyers', exact: true },
   { path: '/Buyers/Buyer', name: 'Buyer', element: Buyer },
   { path: '/buyers/buyerform', name: 'BuyerForm', element: BuyerForm },
-  //{ path: '/buyers/buyerEditForm/:personId', name: 'BuyerEditForm', element: BuyerEditForm },
+  { path: '/buyers/buyerEditForm/:personId', name: 'BuyerEditForm', element: BuyerEditForm },
   //-------------------------------------
   { path: '/Publications', name: 'Publications', exact: true },
   { path: '/Publications/Publication', name: 'Publication', element: Publication },

@@ -33,6 +33,7 @@ const VehicleForm = () => {
         vehicleSoat: false,
         vehicleTecno: false,
         vehicleDescription: '',
+        vehicleId: '',
     });
     const navigate = useNavigate();
 

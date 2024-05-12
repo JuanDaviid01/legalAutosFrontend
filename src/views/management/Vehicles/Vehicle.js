@@ -36,8 +36,8 @@ const Vehicle = () => {
         navigate('/vehicles/vehicleForm');
     };
 
-    function handleEditVehicle() {
-        navigate('');
+    function handleEditVehicle(vehicleId) {
+        navigate(`/vehicles/VehicleEditForm/${vehicleId}`);
     };
     const columns = [
         {
@@ -113,7 +113,7 @@ const Vehicle = () => {
             dataIndex: 'personId',
         },
         {
-            title: 'Option',
+            title: 'Options',
             render: (vehicle) =>(
                 <div>
                     <CButton color="primary" onClick={() => handleEditVehicle(vehicle.vehicleId)}>Edit</CButton>
