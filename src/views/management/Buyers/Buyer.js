@@ -24,6 +24,10 @@ const Buyer = () => {
             const lstBuyers = Object.keys(response.data).map(i => response.data[i]);
             setBuyerData(lstBuyers.flat());
         };
+//
+//
+/*gofdndssd*/
+//
 
         getBuyers();
     }, []);
@@ -37,16 +41,16 @@ const Buyer = () => {
         navigate(`/buyers/buyerEditForm/${personId}`);
     };
 
-    const handleDelete = async(personId) => {
+    const handleDelete = async (personId) => {
         try {
-          var url = `http://localhost:1338/api/disablebuyer/${personId}`;
-          const response = await Axios.put(url);
-          window.location.reload();
+            var url = `http://localhost:1338/api/disablebuyer/${personId}`;
+            const response = await Axios.put(url);
+            window.location.reload();
         }
         catch (e) {
-          console.log(e);
+            console.log(e);
         }
-      }
+    }
 
     const columns = [
         {
@@ -80,22 +84,22 @@ const Buyer = () => {
         {
             title: 'Options',
             render: (buyer) => (
-              <div>
-                <CButton color="primary" onClick={() => handleEdit(buyer.personId)}>
-                  Edit
-                </CButton>
-                <CButton color="danger" onClick={() => handleDelete(buyer.personId)}>
-                  Delete
-                </CButton>
-              </div>
+                <div>
+                    <CButton color="primary" style={{ marginRight: '5px' }} onClick={() => handleEdit(buyer.personId)}>
+                        Editar
+                    </CButton>
+                    <CButton color="danger" onClick={() => handleDelete(buyer.personId)}>
+                        Eliminar
+                    </CButton>
+                </div>
             ),
-          },
-        
+        },
+
     ];
     return (
         <div>
             <div style={{ marginBottom: '20px' }}>
-            <CButton className="btn-primary" onClick={handleCreateBuyer}>New Buyer</CButton>
+                <CButton className="btn-primary" onClick={handleCreateBuyer}>New Buyer</CButton>
             </div>
             <CTable>
                 <CTableHead>
