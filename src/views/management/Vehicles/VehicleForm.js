@@ -18,20 +18,21 @@ const VehicleForm = () => {
         vehiclePlate: '',
         vehicleBrand: '',
         vehicleLine: '',
-        vehicleYear: '',
+        vehicleType: '',
+        vehicleYear: 0,
         vehicleTrasmision: '',
-        vehicleBuyPrice: '',
-        vehicleState: '',
-        cityId: 0,
-        personId: "",
-        buyDate: new Date,
-        sellDate: new Date,
         vehicleCC: '',
         vehicleColor: '',
-        vehicleSoat: '',
-        vehicleTecno: '',
+        vehicleBuyPrice: 0,
+        vehicleSellPrice: 0,
+        vehicleState: '',
+        cityId: 0,
+        personId: '',
+        buyDate: '',
+        sellDate: '',
+        vehicleSoat: false,
+        vehicleTecno: false,
         vehicleDescription: '',
-        vehicleType: '',
     });
     const navigate = useNavigate();
 
@@ -79,6 +80,7 @@ const VehicleForm = () => {
             ...vehicleData,
             cityId: event.target.value
         });
+        console.log(`Estado de SOAT: ${event.target.value}`);
     }
     function handleSelectTecno(event) {
         setSelectedTecno(event.target.value);
@@ -86,14 +88,7 @@ const VehicleForm = () => {
             ...vehicleData,
             cityId: event.target.value
         });
-    }
-
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setVehicleData({
-            ...vehicleData,
-            [name]: value
-        });
+        console.log(`Estado de Tecnomecánica: ${event.target.value}`);
     }
 
     function handleSelectTransmissions(event) {
@@ -102,6 +97,8 @@ const VehicleForm = () => {
             ...vehicleData,
             vehicleTrasmision: event.target.value
         });
+        console.log(`trasmision: ${event.target.value}`);
+
     }
     function handleSelectState(event) {
         setSelectedState(event.target.value);
@@ -109,14 +106,33 @@ const VehicleForm = () => {
             ...vehicleData,
             vehicleState: event.target.value
         });
+        console.log(`state: ${event.target.value}`);
+
+    }
+    function handleChange(event) {
+        const { name, value } = event.target;
+        setVehicleData({
+            ...vehicleData,
+            [name]: value
+        });
+        console.log(`Fecha actual de ${name}: ${value}`);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Asegúrate de prevenir el comportamiento predeterminado del formulario
         try {
-            const response = await Axios.post('http://localhost:1338/api/createVehicle', vehicleData);
-            console.log(response.data);
 
+            const formattedBuyDate = vehicleData.buyDate.split('/').reverse().join('/');
+            const formattedSellDate = vehicleData.sellDate.split('/').reverse().join('/');
+
+
+            const formattedData = {
+                ...vehicleData,
+                buyDate: formattedBuyDate,
+                sellDate: formattedSellDate,
+            };
+            const response = await Axios.post('http://localhost:1338/api/createVehicle', formattedData);
+            console.log(response.data);
             // Si la respuesta es exitosa, navega a la ruta especificada
             navigate('/Vehicles/Vehicle');
         } catch (e) {
@@ -145,7 +161,7 @@ const VehicleForm = () => {
                 <CFormInput
                     type="text"
                     id="vehicleBrand"
-                    name="vehiclebrand"
+                    name="vehicleBrand"
                     label="Brand"
                     value={vehicleData.vehicleBrand}
                     onChange={handleChange}
@@ -176,7 +192,7 @@ const VehicleForm = () => {
             </CCol>
             <CCol md={4}>
                 <CFormInput
-                    type="text"
+                    type="integer"
                     id="vehicleYear"
                     name="vehicleYear"
                     label="Vehicle Year"
@@ -195,11 +211,22 @@ const VehicleForm = () => {
 
             <CCol md={4}>
                 <CFormInput
-                    type="text"
+                    type="integer"
                     id="vehicleBuyPrice"
                     name="vehicleBuyPrice"
                     label="Buy price"
                     value={vehicleData.vehicleBuyPrice}
+                    onChange={handleChange}
+                    required
+                />
+            </CCol>
+            <CCol md={4}>
+                <CFormInput
+                    type="integer"
+                    id="vehicleSellPrice"
+                    name="vehicleSellPrice"
+                    label="Sell price"
+                    value={vehicleData.vehicleSellPrice}
                     onChange={handleChange}
                     required
                 />
@@ -248,14 +275,14 @@ const VehicleForm = () => {
                 />
             </CCol>
             <CCol xs={4}>
-                <CFormSelect id="soatOptions" label="SOAT" value={selectedSoat ? 'true' : 'false'} onChange={handleSelectSoat}>
+                <CFormSelect id="soatOptions" label="SOAT" value={selectedSoat} onChange={handleSelectSoat}>
                     <option value="">Select SOAT status</option>
                     <option value="true">Valid</option>
                     <option value="false">Timed out</option>
                 </CFormSelect>
             </CCol>
             <CCol xs={4}>
-                <CFormSelect id="tecnoOptions" label="Tecnomecanica" value={selectedTecno ? 'true' : 'false'} onChange={handleSelectSoat}>
+                <CFormSelect id="tecnoOptions" label="Tecnomecanica" value={selectedTecno} onChange={handleSelectTecno}>
                     <option value="">Select Tecno status</option>
                     <option value="true">Valid</option>
                     <option value="false">Timed out</option>
