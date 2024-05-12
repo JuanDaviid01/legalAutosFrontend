@@ -111,33 +111,45 @@ const Vehicle = () => {
         {
             title: 'Person id',
             dataIndex: 'personId',
+        },
+        {
+            title: 'Option',
+            render: (vehicle) =>(
+                <div>
+                    <CButton color="primary" onClick={() => handleEditVehicle(vehicle.vehicleId)}>Edit</CButton>
+                    <CButton color="danger" onClick={() => handleDeleteVehicle(vehicle.vehicleId)}>Delete</CButton>
+
+                </div>
+            ),
         }
     ]
     return (
         <div>
             <div style={{ marginBottom: '20px' }}>
-                <button style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px' }} onClick={handleCreateVehicle}>New Vehicle</button>
+            <CButton className="btn-primary" onClick={handleCreateVehicle}>New Vehicle</CButton>
             </div>
-            <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <thead>
-                        <tr>
-                            {columns.map((column, index) => (
-                                <th key={index} style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{column.title}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {vehicleData.map((vehicle, index) => (
-                            <tr key={index}>
-                                {columns.map((column, columnIndex) => (
-                                    <td key={columnIndex} style={{ padding: '8px', borderBottom: '1px solid #ddd', whiteSpace: 'nowrap' }}>{vehicle[column.dataIndex]}</td>
-                                ))}
-                            </tr>
+            <CTable>
+                <CTableHead>
+                    <CTableRow>
+                        {columns.map((column, index) => (
+                            <CTableHeaderCell key={index}>{column.title}</CTableHeaderCell>
                         ))}
-                    </tbody>
-                </table>
-            </div>
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                    {vehicleData.map((vehicle, index) => (
+                        <CTableRow key={index}>
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(vehicle)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{vehicle[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
+                        </CTableRow>
+                    ))}
+                </CTableBody>
+            </CTable>
         </div>
     )
 }
