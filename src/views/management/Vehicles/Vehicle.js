@@ -1,4 +1,4 @@
-/*import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -17,16 +17,18 @@ const Vehicle = () => {
     const [vehicleData, setVehicleData] = useState([]);
 
     useEffect(() => {
-        const getVehicle = async () => {
+        const getVehicles = async () => {
             const response = await Axios({
                 url: 'http://localhost:1338/api/listVehicles',
             });
+            const lstVehicles = Object.keys(response.data).map(i => response.data[i]);
+            setVehicleData(lstVehicles.flat());
         };
-        getVehicle();
+        getVehicles();
     }, []);
     //----------------------------------------------------------------
     const handleCreateVehicle = () => {
-        navigate('/managment/vehicles/vehicle');
+        navigate('/vehicles/vehicleForm');
     };
 
     function handleEditVehicle() {
@@ -54,11 +56,11 @@ const Vehicle = () => {
             dataIndex: 'vehicleYear',
         },
         {
-            title: 'Trasmision',
-            dataIndex: 'vehicleTrasmition',
+            title: 'Trasmission',
+            dataIndex: 'vehicleTrasmision',
         },
         {
-            title: 'C.c',
+            title: 'CC',
             dataIndex: 'vehicleCC',
         },
         {
@@ -91,11 +93,11 @@ const Vehicle = () => {
         },
         {
             title: 'Buy date',
-            dataIndex: 'vehicleBuyDate',
+            dataIndex: 'buyDate',
         },
         {
             title: 'Sell date',
-            dataIndex: 'vehicleSellDate',
+            dataIndex: 'sellDate',
         },
         {
             title: 'City id',
@@ -108,7 +110,9 @@ const Vehicle = () => {
     ]
     return (
         <div>
-            <CButton onClick={handleCreateVehicle} > New Vehicle </CButton>
+            <div style={{ marginBottom: '20px' }}>
+            <CButton className="btn-primary" onClick={handleCreateVehicle}>New Vehicle</CButton>
+            </div>
             <CTable>
                 <CTableHead>
                     <CTableRow>
@@ -118,11 +122,15 @@ const Vehicle = () => {
                     </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                    {restaurantData.map((vehicle, index) => (
+                    {vehicleData.map((vehicle, index) => (
                         <CTableRow key={index}>
-                            {columns.map((column, columnIndex) => (
-                                <CTableDataCell key={columnIndex}> {vehicle[column.dataIndex]} </CTableDataCell>
-                            ))}
+                            {columns.map((column, columnIndex) => {
+                                if (column.render) {
+                                    return <CTableDataCell key={columnIndex}>{column.render(vehicle)}</CTableDataCell>;
+                                } else {
+                                    return <CTableDataCell key={columnIndex}>{vehicle[column.dataIndex]}</CTableDataCell>;
+                                }
+                            })}
                         </CTableRow>
                     ))}
                 </CTableBody>
@@ -130,6 +138,5 @@ const Vehicle = () => {
         </div>
     )
 }
-export default Vehicle
+export default Vehicle;
 
-*/
